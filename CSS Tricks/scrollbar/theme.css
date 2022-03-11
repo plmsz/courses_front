@@ -1,0 +1,12 @@
+:root {
+  --ff-body: "Heebo", sans-serif;
+  --ff-heading: "Oswald", sans-serif;
+
+  --clr-primary-400: hsl(60 100% 50%);
+  --clr-neutral-900: hsl(0 0% 0%);
+  --clr-neutral-100: hsl(0 0% 100%);
+
+  --fs-xl: clamp(3.5rem, 12vw + 1rem, 12rem);
+  --fs-600: 2rem;
+  --fs-400: 1rem;
+}
