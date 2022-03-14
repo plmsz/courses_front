@@ -1,0 +1,30 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.container {
+  margin: 0 auto;
+  width: 80%;
+  max-width: 750px;
+
+  background: #23424a;
+  color: white;
+
+
+  padding: 2em;
+  /* height: 300px; */
+}
+
+.intro-content{
+  width: 50%;
+
+}
+
+/* Importante limitar a max-width, pois é cansativo  quando vc tem que mover a sua cabeça ao longo da tela */
+
+/* Evitar usar min-width, mesma coisa que setar um width */
