@@ -1,9 +1,52 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import App from "./App";
 
-test("renders learn react link", () => {
+test("button has correct initial color and change color to blue when clicked", () => {
 	render(<App />);
-	// const linkElement = screen.getByText(/learn react/i);
-	const linkElement = screen.getByRole("link", { name: /learn react/i });
-	expect(linkElement).toBeInTheDocument();
+
+	const colorButton = screen.getByRole("button", { name: "Change to blue" });
+
+	//button has correct initial color
+	expect(colorButton).toHaveStyle({ backgroundColor: "red" });
+
+	//button change color to blue when clicked and text to be "Change to red"
+	fireEvent.click(colorButton);
+
+	expect(colorButton).toHaveStyle({ backgroundColor: "blue" });
+	expect(colorButton.textContent).toBe("Change to red");
 });
+
+test("initial conditions", () => {
+	//buton enabled
+	//checkbox unchecked
+
+	render(<App />);
+	const colorButton = screen.getByRole("button", { name: "Change to blue" });
+
+	const checkbox = screen.getByRole("checkbox");
+
+	expect(checkbox).not.toBeChecked();
+
+	expect(colorButton).toBeEnabled();
+});
+
+test("when clicked the checkbox button should be disabled, when unchecked button enables", () => {
+	render(<App />);
+
+	const checkbox = screen.getByRole("checkbox", { name: "Disable Button" });
+	const colorButton = screen.getByRole("button", { name: "Change to blue" });
+
+	fireEvent.click(checkbox);
+	expect(colorButton).toBeDisabled();
+
+	fireEvent.click(checkbox);
+	expect(colorButton).toBeEnabled();
+});
+
+//Ex do React
+// test("renders learn react link", () => {
+// 	render(<App />);
+// 	// const linkElement = screen.getByText(/learn react/i);
+// 	const linkElement = screen.getByRole("link", { name: /learn react/i });
+// 	expect(linkElement).toBeInTheDocument();
+// });
