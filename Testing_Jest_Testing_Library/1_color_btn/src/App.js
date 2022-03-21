@@ -5,12 +5,12 @@ function App() {
 	const [buttonColor, setButtonColor] = useState("red");
 	const newButtonColor = buttonColor === "red" ? "blue" : "red";
 
-  const [checked, setChecked] = useState(false);
+	const [checked, setChecked] = useState(false);
 
 	return (
 		<div>
 			<button
-				style={{ backgroundColor: buttonColor }}
+				style={{ backgroundColor: checked ? "gray" : buttonColor }}
 				disabled={checked}
 				onClick={() => setButtonColor(newButtonColor)}
 			>
