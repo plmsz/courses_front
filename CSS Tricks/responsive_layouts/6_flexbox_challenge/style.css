@@ -1,0 +1,102 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,100italic,300,300italic,regular,italic,500,500italic,700,700italic,900,900italic);
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: "Roboto", Arial, Helvetica, sans-serif;
+	margin: 0;
+	font-size: 1.3125rem;
+}
+
+p,
+h1,
+h2 {
+	margin-bottom: 0;
+}
+.hero {
+	color: #ffffff;
+	padding: 9rem 0;
+	background: hsl(192, 36%, 21%);
+}
+
+.container {
+	width: 80%;
+	margin: 0 auto;
+	max-width: 75rem;
+}
+
+.row {
+	/* flex container */
+	display: flex;
+	gap: 30px;
+	text-align: center;
+	padding: 3rem 0;
+}
+
+.col {
+	/* these are flex-items */
+	width: 100%; /*  first column content is smaller so it doesn't grow, so setting width, all columns be equal*/
+}
+
+.two-columns {
+	background-color: #136c72;
+	color: #ffffff;
+}
+.accent-text {
+	color: #87629a;
+}
+
+.container__content {
+	width: 65%;
+	line-height: 1.5em;
+}
+
+.container__content h1 {
+	font-size: 3rem;
+	line-height: 1em;
+	margin-bottom: 2rem;
+}
+
+.container__btn {
+	all: unset;
+	display: block;
+	cursor: pointer;
+	background: hsl(184, 68%, 54%);
+	mix-blend-mode: normal;
+	border-radius: 1.7em;
+	text-transform: uppercase;
+	color: hsla(184, 73%, 10%, 1);
+	font-weight: 700;
+	padding: 0.75em 2.2em;
+	margin-top: 1.5em;
+	width: max-content;
+}
+
+.container__btn:hover,
+.container__btn:focus {
+	opacity: 0.9;
+}
+
+@media (max-width: 500px) {
+	.row {
+		flex-wrap: wrap;
+	}
+}
+@media (max-width: 769px) {
+	.container-content {
+		width: 100%;
+	}
+	.hero {
+		height: 100vh;
+		padding: 10% 0;
+	}
+	.container-content h1 {
+		font-size: 2.3rem;
+	}
+	.container-btn {
+		border-radius: 2rem;
+		padding: 5% 10%;
+	}
+}

@@ -48,3 +48,26 @@ The latter has more downloads per week, but the former seems to be more actively
 
 Testing for Class Name
 Another possibility would be to check explicitly for the class name (hidden in this example), using toHaveClass. This would be simpler, but farther from the actual user experience (this is testing implementation details, rather than how the user sees the page). It's always a balance, and I think either this approach or transforming the CSS would be defensible.
+
+## Unit Testing Functions
+Use:
+- covering all possible edge cases
+- determining what caused functional tests to fail
+Issues:
+- highl-level makes them resistant to refactors
+- highl-level makes them difficult to diagnose
+
+## ESLINT
+npm install eslint-plugin-testing-library eslint-plugin-jest-dom
+
+## Bootstrap
+no html
+ <script src="https://unpkg.com/react/umd/react.production.min.js" crossorigin></script>
+
+  <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js" crossorigin></script>
+
+  <script src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js" crossorigin></script>
+
+no index
+
+import 'bootstrap/dist/css/bootstrap.min.css';
