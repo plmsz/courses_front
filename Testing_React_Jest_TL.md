@@ -71,3 +71,33 @@ no html
 no index
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+## userEvent
+  - fireEvent dispatches exactly the events you tell it to and just those - even if those exact events never had been dispatched in a real interaction in a browser.
+
+  - userEvent on the other hand dispatches the events like they would happen if a user interacted with the document. That might lead to the same events you previously dispatched per fireEvent directly, but it also might catch bugs that make it impossible for a user to trigger said events.
+
+npm install @testing-library/dom 
+npm install @testing-library/user-event
+
+## query methods
+
+https://testing-library.com/docs/react-testing-library/cheatsheet/
+command[All]ByQueryType
+- command
+  - get: expect element to be in DOM
+  - query: expect element not to be in DOM
+  - find: expect element to appear async
+
+- [All]
+  - (include) more than one match
+  - (exclude) one match
+
+- QueryType:
+  - Role
+  - AltText
+  - Text
+  - Form elements:
+    - Placeholder
+    - LabelText
+    - DisplayByValue
