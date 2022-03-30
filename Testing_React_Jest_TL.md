@@ -101,3 +101,34 @@ command[All]ByQueryType
     - Placeholder
     - LabelText
     - DisplayByValue
+
+## Avoid nesting
+It is not advisable to write code in a describe block without wrapping it in beforeEach or beforeAll (or afterEach / afterAll). Wrapping the code in one of these blocks ensures the code will run at the proper time(s) -- without specifying that, the code will behave unpredictably (as you noticed). When I moved the render statement to be the first line of each test, the tests passed.
+
+Note that it is against best practices to put a render statement in a beforeEach, according to the testing-library/react ESLint plugin.  
+
+https://kentcdodds.com/blog/avoid-nesting-when-youre-testing
+https://kentcdodds.com/blog/write-fewer-longer-tests
+
+
+### Disallow the use of render in setup functions
+const setup = () => render(<MyComponent />);
+
+beforeEach(() => {
+  // other stuff...
+});
+
+it('Should have foo and bar', () => {
+  setup();
+  expect(screen.getByText('foo')).toBeInTheDocument();
+  expect(screen.getByText('bar')).toBeInTheDocument();
+});
+
+If you would like to allow the use of render (or a custom render function) in either beforeAll or beforeEach, this can be configured using the option allowTestingFrameworkSetupHook. This may be useful if you have configured your tests to skip auto cleanup. allowTestingFrameworkSetupHook is an enum that accepts either "beforeAll" or "beforeEach".
+
+   "testing-library/no-render-in-setup": ["error", {"allowTestingFrameworkSetupHook": "beforeAll"}],
+
+  
+  ## not wrapped in act(...) warning
+  - react update element after test was finished
+  - await the change and assertin on it
