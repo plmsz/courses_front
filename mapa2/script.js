@@ -1,3 +1,7 @@
+// const { createCanvas, loadImage } = require('canvas');
+const fabric = require("./node_modules/fabric/").fabric;
+
+console.log("H");
 let canvas;
 let number;
 const grid = 30;
@@ -19,7 +23,6 @@ const wallShadow = 'rgba(0, 0, 0, 0.4) 5px 5px 20px';
 
 var photoUrlLandscape = 'https://images8.alphacoders.com/292/292379.jpg',
     photoUrlPortrait = 'https://presspack.rte.ie/wp-content/blogs.dir/2/files/2015/04/AMC_TWD_Maggie_Portraits_4817_V1.jpg';
-
 
 let widthEl = document.getElementById('width');
 let heightEl = document.getElementById('height');
@@ -74,7 +77,7 @@ function initCanvas() {
             }
         }
     });
-
+    console.log("fun");
     canvas.on('object:modified', function (e) {
         e.target.scaleX = e.target.scaleX >= 0.25 ? (Math.round(e.target.scaleX * 2) / 2) : 0.5;
         e.target.scaleY = e.target.scaleY >= 0.25 ? (Math.round(e.target.scaleY * 2) / 2) : 0.5;
