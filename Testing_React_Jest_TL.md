@@ -132,3 +132,12 @@ If you would like to allow the use of render (or a custom render function) in ei
   ## not wrapped in act(...) warning
   - react update element after test was finished
   - await the change and assertin on it
+
+  ## Mock server worker
+  npm install msw
+  https://mswjs.io/docs/getting-started/mocks/rest-api
+
+  - ctx : a group of functions that help to set a status code, headers, body, etc. of the mocked response.
+
+  server e setupTest
+  https://mswjs.io/docs/getting-started/integrate/node
