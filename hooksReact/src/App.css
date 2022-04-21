@@ -1,0 +1,24 @@
+.App {
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 5%;
+	width: 100vw;
+	height: 100vh;
+}
+
+button {
+	font-size: calc(12px + 1vmin);
+}
+
+.container {
+	outline: 1px solid palevioletred;
+	padding: 1%;
+}
+
+h1 {
+	font-size: calc(12px + 1vmin);
+	color: darkslateblue;
+}
