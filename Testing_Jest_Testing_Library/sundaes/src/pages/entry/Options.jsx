@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ScoopOption from "./ScoopOption";
-import { Row } from "react-bootstrap";
+import Row from "react-bootstrap/Row"
+import ToppingOption from "./ToppingOptions";
 //in real life, use Enum for optionType, since has only two types
 const Options = ({ optionType }) => {
 	const [items, setItems] = useState([]);
@@ -15,7 +16,7 @@ const Options = ({ optionType }) => {
 			});
 	}, [optionType]);
 	//TODO components
-	const ItemComponent = optionType === "scoops" ? ScoopOption : null;
+	const ItemComponent = optionType === "scoops" ? ScoopOption : ToppingOption;
 
 	const optionItems = items.map((item) => (
 		<ItemComponent
