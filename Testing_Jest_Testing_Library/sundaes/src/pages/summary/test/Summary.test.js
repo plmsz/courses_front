@@ -46,7 +46,7 @@ test("popover responds to hover", async () => {
 	// popover disappears when we mouse out
 	userEvent.unhover(termsAndConditions);
 	
-	//dissappearance of the popover was happening asynchronously, so it was happening after the test completed, by making the assertion asynchronous, solved the problem
+	//dissappearance of the popover was happening asynchronously, so it was happening after the xtest completed, by making the assertion asynchronous, solved the problem
 	await waitForElementToBeRemoved(() => screen.queryByText(
 		/no ice cream will actually be delivered/i
 	));

@@ -15,7 +15,7 @@ const Options = ({ optionType }) => {
 			});
 	}, [optionType]);
 	//TODO components
-	const ItemComponent = optionType === "scoops" ? <ScoopOption /> : null;
+	const ItemComponent = optionType === "scoops" ? ScoopOption : null;
 
 	const optionItems = items.map((item) => (
 		<ItemComponent
