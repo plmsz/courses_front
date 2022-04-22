@@ -25,8 +25,6 @@ test("displays image for each topping from server", async () => {
 
 	const altText = toppingImages.map((element) => element.alt);
 
-	console.log(altText);
-
 	expect(altText).toEqual([
 		"Cherries Topping",
 		"M&Ms Topping",
