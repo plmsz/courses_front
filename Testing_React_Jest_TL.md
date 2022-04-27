@@ -337,3 +337,13 @@ When in need to wait for any period of time you can use waitFor, to wait for you
 await waitFor(() => expect(mockAPI).toHaveBeenCalledTimes(2))
 // ...
 ~~~
+
+# wrapper
+~~~javascript
+	render(<Options optionType="scoops" />, { wrapper: OrderDetailsProvider });
+~~~
+
+# Custom Render
+It's often useful to define a custom render method that includes things like global context providers, data stores, etc. To make this available globally, one approach is to define a utility file that re-exports everything from React Testing Library. You can replace React Testing Library with this file in all your imports. 
+
+https://testing-library.com/docs/react-testing-library/setup/#custom-render
