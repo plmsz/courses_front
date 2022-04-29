@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ScoopOption from "./ScoopOption";
-import Row from "react-bootstrap/Row";
+import { Row, Container } from "react-bootstrap";
 import ToppingOption from "./ToppingOptions";
 import AlertBanner from "../common/AlertBanner";
 import { useOrderDetails } from "../../contexts/OrderDetails";
@@ -29,17 +29,16 @@ const Options = ({ optionType }) => {
 	const ItemComponent = optionType === "scoops" ? ScoopOption : ToppingOption;
 	const title = optionType[0].toUpperCase() + optionType.slice(1).toLowerCase();
 
-	 const optionItems = items.map((item) => (
-			<ItemComponent
-				key={item.name}
-				name={item.name}
-				imagePath={item.imagePath}
-				updateItemCount={(itemName, newItemCount) =>
-					updateItemCount(itemName, newItemCount, optionType)
-				}
-			/>
-		));
-
+	const optionItems = items.map((item) => (
+		<ItemComponent
+			key={item.name}
+			name={item.name}
+			imagePath={item.imagePath}
+			updateItemCount={(itemName, newItemCount) =>
+				updateItemCount(itemName, newItemCount, optionType)
+			}
+		/>
+	));
 
 	return (
 		<>
@@ -48,7 +47,8 @@ const Options = ({ optionType }) => {
 			<p>
 				{title} total: {orderDetails.totals[optionType]}
 			</p>
-			<Row>{optionItems}</Row>;
+				<Row>{optionItems}</Row>;
+
 		</>
 	);
 };

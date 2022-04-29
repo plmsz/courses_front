@@ -339,6 +339,7 @@ await waitFor(() => expect(mockAPI).toHaveBeenCalledTimes(2))
 ~~~
 
 # wrapper
+Wrapper option to render to apply context provider
 ~~~javascript
 	render(<Options optionType="scoops" />, { wrapper: OrderDetailsProvider });
 ~~~
@@ -347,3 +348,13 @@ await waitFor(() => expect(mockAPI).toHaveBeenCalledTimes(2))
 It's often useful to define a custom render method that includes things like global context providers, data stores, etc. To make this available globally, one approach is to define a utility file that re-exports everything from React Testing Library. You can replace React Testing Library with this file in all your imports. 
 
 https://testing-library.com/docs/react-testing-library/setup/#custom-render
+
+# { exact : false}
+-  to match partial text
+-  it doesn't work with getByRole
+
+~~~javascript
+const scoopsSubtotal = screen.getByText("Scoops total: $", { exact: false });
+~~~
+
+# black box test (not consider the implementation)
