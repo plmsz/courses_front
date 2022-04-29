@@ -2,8 +2,7 @@ import { Col, Form } from "react-bootstrap";
 
 const ToppingOption = ({ name, imagePath, updateItemCount }) => {
 	return (
-		<div>
-			<Col xs={12} sm={6} lg={3} style={{ textAlign: "center" }}>
+			<Col xs={12} sm={6} lg={2} style={{ textAlign: "center" }}>
 				<img
 					src={`http://localhost:3030/${imagePath}`}
 					alt={`${name} Topping`}
@@ -19,7 +18,6 @@ const ToppingOption = ({ name, imagePath, updateItemCount }) => {
 					/>
 				</Form.Group>
 			</Col>
-		</div>
 	);
 };
 
