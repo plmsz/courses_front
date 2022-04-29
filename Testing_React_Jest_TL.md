@@ -358,3 +358,35 @@ const scoopsSubtotal = screen.getByText("Scoops total: $", { exact: false });
 ~~~
 
 # black box test (not consider the implementation)
+
+# describe
+creates a block that groups together several related tests. For example, if you have a myBeverage object that is supposed to be delicious but not sour, you could test it with:
+
+~~~javascript
+const myBeverage = {
+  delicious: true,
+  sour: false,
+};
+
+describe('my beverage', () => {
+  test('is delicious', () => {
+    expect(myBeverage.delicious).toBeTruthy();
+  });
+
+  test('is not sour', () => {
+    expect(myBeverage.sour).toBeFalsy();
+  });
+});
+  ~~~
+_________
+# Snapshot
+- u - to update snapshot
+
+~~~javascript
+    it('renders correctly', () => {
+  const tree = renderer
+    .create(<Link page="http://www.instagram.com">Instagram</Link>)
+    .toJSON();
+  expect(tree).toMatchSnapshot();
+});
+~~~
