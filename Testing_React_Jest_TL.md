@@ -151,7 +151,7 @@ Uploads file to an `<input>`
 Fires a tab event changing the document.activeElement in the same way the browser does.
 
 ### clear
-Selects the text inside an <input> or <textarea> and deletes it.
+Selects the text inside an `<input>`or `<textarea>` and deletes it.
 
 ~~~javascript
 import React from 'react'
@@ -390,3 +390,27 @@ _________
   expect(tree).toMatchSnapshot();
 });
 ~~~
+
+# Debugging
+
+~~~javascript
+screen.debug()
+~~~
+
+|Error                                                       | Cause                                                                               | 
+---                                                          | ---                                                                                 | 
+| Untable to find role                                       | Eihter role doesn't exist or no element matches name option                         |
+|An update to component inside a test was not wrapped in act | There was an update to the component state afte test completed. Use **await findBy**|
+|Can't perform a React state update on an unmounte component | There was an update to the component state afte test completed. Use **await findBy**|
+|Error: connect ECONNREFUSED 127.0.0.1                       | There isn't Mock Service Worker handler associated with this route and method       |
+
+
+# Unit Test x Functional tests
+- Test Behavior, not Code
+This means no testing of “implementation details” such as internal workings of Redux action creators and reducers, or mocking functions to return a specific value; instead, the test setup is done by entering text and clicking on the page as a user would. 
+
+- Use unit tests when:
+my functional tests happen to test only one unit
+there’s a likely point of failure in a longer functional test
+I want to confirm that the correct data is sent to the server
+I’m testing edge cases for a helper function that don’t affect rendering

@@ -1,7 +1,6 @@
 import {
 	render,
 	screen,
-	waitFor,
 } from "../../../tests-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
 import Options from "../Options";
