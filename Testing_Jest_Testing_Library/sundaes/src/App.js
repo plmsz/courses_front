@@ -14,7 +14,7 @@ function App() {
 	const entries = [
 		<OrderEntry setOrderPhase={setOrderPhase} />,
 		<SummaryForm setOrderPhase={setOrderPhase} />,
-		<OrderConfirmation />
+		<OrderConfirmation setOrderPhase={setOrderPhase}/>
 	];
 
 	return (

@@ -1,7 +1,15 @@
 import React, { useState } from "react";
-import { Form, Button, Popover, OverlayTrigger } from "react-bootstrap";
+import {
+  Form,
+  Button,
+  Popover,
+  OverlayTrigger,
+  Container,
+} from "react-bootstrap";
+import { useOrderDetails } from "./../../contexts/OrderDetails";
 const SummaryForm = ({ setOrderPhase }) => {
   const [tcChecked, setTcChecked] = useState(false);
+  const [orderDetails] = useOrderDetails();
 
   const popover = (
     <Popover id="popover-basic">
@@ -20,6 +28,10 @@ const SummaryForm = ({ setOrderPhase }) => {
 
   return (
     <>
+      <Container>
+        <h2>Toppings: $ {orderDetails.totals.toppings}</h2>
+        <h2>Scoops: $ {orderDetails.totals.scoops}</h2>
+      </Container>
       <Form.Group controlId="terms">
         <Form.Check
           type="checkbox"
@@ -33,7 +45,7 @@ const SummaryForm = ({ setOrderPhase }) => {
         variant="primary"
         type="submit"
         disabled={!tcChecked}
-        onClick={()=>setOrderPhase(2)}
+        onClick={() => setOrderPhase(2)}
       >
         Confirm order
       </Button>

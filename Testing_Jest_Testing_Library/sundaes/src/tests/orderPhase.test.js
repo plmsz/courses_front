@@ -25,21 +25,22 @@ test('order phases for happy path', async () => {
     const orderSummaryButton = screen.getByRole('button', { name: /order sundae/i });
     userEvent.click(orderSummaryButton);
 
-    // //check summary information
-    // const toppingsHeading = screen.getByRole('heading', { name: "Toppings: $1.50" });
-    // expect(toppingsHeading).toBeInTheDocument();
+    //check summary information
+    const toppingsHeading = screen.getByRole('heading', { name: "Toppings: $1.50" });
+    expect(toppingsHeading).toBeInTheDocument();
 
-    // const scoopsHeading = screen.getByText("Scoops: $", { exact: false });
-    // expect(scoopsHeading).toHaveTextContent('6.00');
+    const scoopsHeading = screen.getByText("Scoops: $", { exact: false });
+    expect(scoopsHeading).toHaveTextContent('6.00');
 
-    //check summary options items
+    // check summary options items;
+    
     /* expect(screen.getByText('1 Vanilla')).toBeInTheDocument()
     expect(screen.getByText('2 Chocolate')).toBeInTheDocument()
     expect(screen.getByText('M&Ms')).toBeInTheDocument() */
 
-    // const optionItems = screen.getAllByRole('listitem');
-    // const optionItemsText = optionItems.map((item) => item.textContent);
-    // expect(optionItemsText).toEqual(['1 Vanilla', '2 Chocolate', 'M&Ms']);
+    const optionItems = screen.getAllByRole('listitem');
+    const optionItemsText = optionItems.map((item) => item.textContent);
+    expect(optionItemsText).toEqual(['1 Vanilla', '2 Chocolate', 'M&Ms']);
 
     // accept terms and conditions
     const checkConfirmOrder = screen.getByText(/terms and conditions/i);

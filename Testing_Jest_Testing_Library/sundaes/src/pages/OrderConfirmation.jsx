@@ -1,10 +1,9 @@
 import { Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useOrderDetails } from './../contexts/OrderDetails';
 
 const OrderConfirmation = ({ setOrderPhase }) => {
-    // const [,,resetOrder] = useOrderDetails()
+
   const [orderNumber, setOrderNumber] = useState(null);
 
   useEffect(() => {
@@ -22,7 +21,7 @@ const OrderConfirmation = ({ setOrderPhase }) => {
       <h1>Thank You!</h1>
       <h2>Your order Number is {orderNumber}</h2>
       <p>as per our terms and conditions, nothing will happen now</p>
-      <Button variant="primary">
+      <Button variant="primary" onClick={()=>setOrderPhase(0)}>
         Create a new order
       </Button>
     </ div>
