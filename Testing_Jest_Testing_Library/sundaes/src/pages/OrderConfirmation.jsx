@@ -1,10 +1,11 @@
 import { Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useOrderDetails } from "../contexts/OrderDetails";
 
 const OrderConfirmation = ({ setOrderPhase }) => {
-
   const [orderNumber, setOrderNumber] = useState(null);
+  const [, , resetOrder] = useOrderDetails()
 
   useEffect(() => {
     axios
@@ -16,12 +17,17 @@ const OrderConfirmation = ({ setOrderPhase }) => {
       });
   }, []);
 
+  const handleSubmit=()=>{
+    setOrderPhase(0);
+    resetOrder()
+  }
+
   return (
     <div styled={{textAlign: 'center'}}>
       <h1>Thank You!</h1>
-      <h2>Your order Number is {orderNumber}</h2>
+      <h2>Your order number is {orderNumber}</h2>
       <p>as per our terms and conditions, nothing will happen now</p>
-      <Button variant="primary" onClick={()=>setOrderPhase(0)}>
+      <Button variant="primary" onClick={()=>handleSubmit()}>
         Create a new order
       </Button>
     </ div>

@@ -1,4 +1,8 @@
-import { render, screen, waitForElementToBeRemoved } from "@testing-library/react";
+import {
+	render,
+	screen,
+	waitForElementToBeRemoved,
+} from "../../../tests-utils/testing-library-utils";
 import SummaryForm from "../SummaryForm";
 import userEvent from "@testing-library/user-event";
 
@@ -45,10 +49,9 @@ test("popover responds to hover", async () => {
 
 	// popover disappears when we mouse out
 	userEvent.unhover(termsAndConditions);
-	
-	//dissappearance of the popover was happening asynchronously, so it was happening after the xtest completed, by making the assertion asynchronous, solved the problem
-	await waitForElementToBeRemoved(() => screen.queryByText(
-		/no ice cream will actually be delivered/i
-	));
 
+	//dissappearance of the popover was happening asynchronously, so it was happening after the xtest completed, by making the assertion asynchronous, solved the problem
+	await waitForElementToBeRemoved(() =>
+		screen.queryByText(/no ice cream will actually be delivered/i)
+	);
 });
