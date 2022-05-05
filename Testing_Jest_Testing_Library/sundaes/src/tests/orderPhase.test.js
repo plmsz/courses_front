@@ -66,6 +66,7 @@ test("order phases for happy path", async () => {
 	const thankYouHeader = await screen.findByRole("heading", {
 		name: /thank you/i,
 	});
+
 	expect(thankYouHeader).toBeInTheDocument();
 
 	const orderNumber = await screen.findByText(/order number/i);

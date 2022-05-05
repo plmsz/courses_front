@@ -1,4 +1,4 @@
-# Accessiblity
+# Accessiblity and Queries
 
 https://www.w3.org/TR/wai-aria/#role_definitions
 https://testing-library.com/docs/queries/about/#priority
@@ -25,11 +25,12 @@ Queries Accessible to Everyone Queries that reflect the experience of visual/mou
 
 - getByTestId: The user cannot see (or hear) these, so this is only recommended for cases where you can't match by role or text or it doesn't make sense (e.g. the text is dynamic).
 
-
- >O output te ajuda quando vc cola um role que não exista
+> O output te ajuda quando vc cola um role que não exista
 
 ## Some roles
--  Spinbutton: A form of range that expects the user to select from among discrete choices.
+
+- Spinbutton: A form of range that expects the user to select from among discrete choices.
+
 ---
 
 # Testing Styles from Imported CSS Modules
@@ -55,6 +56,7 @@ Testing for Class Name
 Another possibility would be to check explicitly for the class name (hidden in this example), using toHaveClass. This would be simpler, but farther from the actual user experience (this is testing implementation details, rather than how the user sees the page). It's always a balance, and I think either this approach or transforming the CSS would be defensible.
 
 ---
+
 # Unit Testing Functions
 
 Use:
@@ -64,27 +66,42 @@ Use:
   Issues:
 - highl-level makes them resistant to refactors
 - highl-level makes them difficult to diagnose
+
 ---
+
 ## ESLINT
 
 npm install eslint-plugin-testing-library eslint-plugin-jest-dom
 
 ---
+
 ## Bootstrap
 
 - No index.html
-~~~ html
- <script src="https://unpkg.com/react/umd/react.production.min.js" crossorigin></script>
 
-  <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js" crossorigin></script>
+```html
+<script
+	src="https://unpkg.com/react/umd/react.production.min.js"
+	crossorigin
+></script>
 
-  <script src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js" crossorigin></script>
-~~~
+<script
+	src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"
+	crossorigin
+></script>
+
+<script
+	src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js"
+	crossorigin
+></script>
+```
+
 - No index.js
 
 `import 'bootstrap/dist/css/bootstrap.min.css'; `
 
 ---
+
 ## userEvent
 
 - fireEvent dispatches exactly the events you tell it to and just those - even if those exact events never had been dispatched in a real interaction in a browser.
@@ -102,75 +119,84 @@ npm install @testing-library/user-event
 
 - ### unhover
 
-~~~javascript
-import React from 'react'
-import {render, screen} from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import Tooltip from '../tooltip'
+```javascript
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import Tooltip from "../tooltip";
 
-  test('hover', () => {
-    const messageText = 'Hello'
-      render(
-      <Tooltip messageText={messageText}>
-          <TrashIcon aria-label="Delete" />
-        </Tooltip>,
-      )
-    userEvent.hover(screen.getByLabelText(/delete/i))
-    expect(screen.getByText(messageText)).toBeInTheDocument()
-    userEvent.unhover(screen.getByLabelText(/delete/i))
-    expect(screen.queryByText(messageText)).not.toBeInTheDocument()
-    })
-~~~
--  selectOptions
--  deselectOptions
+test("hover", () => {
+	const messageText = "Hello";
+	render(
+		<Tooltip messageText={messageText}>
+			<TrashIcon aria-label="Delete" />
+		</Tooltip>
+	);
+	userEvent.hover(screen.getByLabelText(/delete/i));
+	expect(screen.getByText(messageText)).toBeInTheDocument();
+	userEvent.unhover(screen.getByLabelText(/delete/i));
+	expect(screen.queryByText(messageText)).not.toBeInTheDocument();
+});
+```
+
+- selectOptions
+- deselectOptions
 
 ### type(element, text, [options])
+
 Writes text inside an `<input>` or a `<textarea>`
 
-~~~javascript
-import React from 'react'
-import {render, screen} from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import userEvent from '@testing-library/user-event'
+```javascript
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import userEvent from "@testing-library/user-event";
 
-test('type', () => {
-  render(<textarea />)
+test("type", () => {
+	render(<textarea />);
 
-  userEvent.type(screen.getByRole('textbox'), 'Hello,{enter}World!')
-  expect(screen.getByRole('textbox')).toHaveValue('Hello,\nWorld!')
-})
-~~~
+	userEvent.type(screen.getByRole("textbox"), "Hello,{enter}World!");
+	expect(screen.getByRole("textbox")).toHaveValue("Hello,\nWorld!");
+});
+```
 
 ### keyboard(text, options)
+
 Simulates the keyboard events described by text. This is similar to userEvent.type() but without any clicking or changing the selection range
 
 ### upload(element, file, [{ clickInit, changeInit }], [options])
+
 Uploads file to an `<input>`
 
 ### tab({shift, focusTrap})
+
 Fires a tab event changing the document.activeElement in the same way the browser does.
 
 ### clear
+
 Selects the text inside an `<input>`or `<textarea>` and deletes it.
 
-~~~javascript
-import React from 'react'
-import {render, screen} from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+```javascript
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
-test('clear', () => {
-  render(<textarea defaultValue="Hello, World!" />)
+test("clear", () => {
+	render(<textarea defaultValue="Hello, World!" />);
 
-  userEvent.clear(screen.getByRole('textbox'))
-  expect(screen.getByRole('textbox')).toHaveValue('')
-})
-~~~
+	userEvent.clear(screen.getByRole("textbox"));
+	expect(screen.getByRole("textbox")).toHaveValue("");
+});
+```
 
 ### paste(element, text, eventInit, options)
+
 Allows you to simulate the user pasting some text into an input.
 
 ---
+
 ## query methods
+
 https://testing-library.com/docs/react-testing-library/cheatsheet/
 
 command[All]ByQueryType
@@ -196,6 +222,7 @@ command[All]ByQueryType
     - DisplayByValue
 
 ---
+
 ## Avoid nesting
 
 It is not advisable to write code in a describe block without wrapping it in beforeEach or beforeAll (or afterEach / afterAll). Wrapping the code in one of these blocks ensures the code will run at the proper time(s) -- without specifying that, the code will behave unpredictably (as you noticed). When I moved the render statement to be the first line of each test, the tests passed.
@@ -207,19 +234,19 @@ https://kentcdodds.com/blog/write-fewer-longer-tests
 
 ## Disallow the use of render in setup functions
 
-~~~javascript
+```javascript
 const setup = () => render(<MyComponent />);
 
 beforeEach(() => {
-// other stuff...
+	// other stuff...
 });
 
-it('Should have foo and bar', () => {
-setup();
-expect(screen.getByText('foo')).toBeInTheDocument();
-expect(screen.getByText('bar')).toBeInTheDocument();
+it("Should have foo and bar", () => {
+	setup();
+	expect(screen.getByText("foo")).toBeInTheDocument();
+	expect(screen.getByText("bar")).toBeInTheDocument();
 });
-~~~
+```
 
 If you would like to allow the use of render (or a custom render function) in either beforeAll or beforeEach, this can be configured using the option allowTestingFrameworkSetupHook. This may be useful if you have configured your tests to skip auto cleanup. allowTestingFrameworkSetupHook is an enum that accepts either "beforeAll" or "beforeEach".
 
@@ -230,13 +257,14 @@ If you would like to allow the use of render (or a custom render function) in ei
 - react update element after test was finished
 - await the change and assertin on it
 
-~~~javascript
-    await waitForElementToBeRemoved(() => screen.queryByText(
-      /no ice cream will actually be delivered/i
-    ));
-~~~
+```javascript
+await waitForElementToBeRemoved(() =>
+	screen.queryByText(/no ice cream will actually be delivered/i)
+);
+```
 
 ---
+
 # Mock server worker
 
 - Purpose: intercep networks calls and return specified response
@@ -247,14 +275,14 @@ https://mswjs.io/docs/getting-started/mocks/rest-api
 
 - ctx : a group of functions that help to set a status code, headers, body, etc. of the mocked response.
 
-Create a folder 
+Create a folder
 /mocks
-  /handlers.js
-  /server.js
+/handlers.js
+/server.js
 
 - handler.js
 
-~~~javascript
+```javascript
 import { rest } from "msw";
 
 export const handlers = [
@@ -264,31 +292,24 @@ export const handlers = [
 				{ name: "Chocolate", imagePath: "/images/chocolate.png" },
 				{ name: "Vanilla", imagePath: "/images/vanilla.png" },
 			])
-		); 
+		);
 	}),
 ];
-~~~
+```
+
 Copy whats is in the link in the server.js and setupTest.js
 
 https://mswjs.io/docs/getting-started/integrate/node
 
-## toBe x toEqual (matchers)
-- toBe: numbers, strings
-- toEqual : arrays, objects
-
-~~~javascript
-const altText = scoopImages.map((element)=> element.alt);
-expect(altText).toEqual(['Chocolate', 'Vanilla'])
-~~~
 ---
 
 ## Find elements async
 
 npm install axios
 
-~~~javascript
+```javascript
 test("displays image for each scoop option from server", async () => {
-	render(<Options optionType="scoops"/>);
+	render(<Options optionType="scoops" />);
 
 	const scoopImages = await screen.findAllByRole("img", { name: /scoop$/i });
 	expect(scoopImages).toHaveLength(2);
@@ -296,13 +317,15 @@ test("displays image for each scoop option from server", async () => {
 	const altText = scoopImages.map((element) => element.alt);
 	expect(altText).toEqual(["Chocolate Scoop", "Vanilla Scoop"]);
 });
-~~~
+```
 
 ---
+
 ## Simutale server errors
+
 Override Mock service Worker response dor individual tests
 
-~~~javascript
+```javascript
 test("handles error for scoops and toppings routes", async () => {
 	server.resetHandlers(
 		rest.get("http://localhost:3030/scoops", (req, res, ctx) =>
@@ -317,100 +340,157 @@ test("handles error for scoops and toppings routes", async () => {
 
 });
 
-~~~
+```
+
 # Skip a test, execulte only
 
 Press p to identify a pattern and chose a file
 
-~~~javascript
+```javascript
 test.skip("not a real test", () => {});
 test.only("execute only this test", () => {});
-~~~
+```
 
 # waitFor
 
 When in need to wait for any period of time you can use waitFor, to wait for your expectations to pass.
 
-~~~javascript
+```javascript
 // Wait until the callback does not throw an error. In this case, that means
 // it'll wait until the mock function has been called twice.
-await waitFor(() => expect(mockAPI).toHaveBeenCalledTimes(2))
+await waitFor(() => expect(mockAPI).toHaveBeenCalledTimes(2));
 // ...
-~~~
+```
 
 # wrapper
+
 Wrapper option to render to apply context provider
-~~~javascript
-	render(<Options optionType="scoops" />, { wrapper: OrderDetailsProvider });
-~~~
+
+```javascript
+render(<Options optionType="scoops" />, { wrapper: OrderDetailsProvider });
+```
 
 # Custom Render
-It's often useful to define a custom render method that includes things like global context providers, data stores, etc. To make this available globally, one approach is to define a utility file that re-exports everything from React Testing Library. You can replace React Testing Library with this file in all your imports. 
+
+It's often useful to define a custom render method that includes things like global context providers, data stores, etc. To make this available globally, one approach is to define a utility file that re-exports everything from React Testing Library. You can replace React Testing Library with this file in all your imports.
 
 https://testing-library.com/docs/react-testing-library/setup/#custom-render
-
-# { exact : false}
--  to match partial text
--  it doesn't work with getByRole
-
-~~~javascript
-const scoopsSubtotal = screen.getByText("Scoops total: $", { exact: false });
-~~~
 
 # black box test (not consider the implementation)
 
 # describe
+
 creates a block that groups together several related tests. For example, if you have a myBeverage object that is supposed to be delicious but not sour, you could test it with:
 
-~~~javascript
+```javascript
 const myBeverage = {
-  delicious: true,
-  sour: false,
+	delicious: true,
+	sour: false,
 };
 
-describe('my beverage', () => {
-  test('is delicious', () => {
-    expect(myBeverage.delicious).toBeTruthy();
-  });
+describe("my beverage", () => {
+	test("is delicious", () => {
+		expect(myBeverage.delicious).toBeTruthy();
+	});
 
-  test('is not sour', () => {
-    expect(myBeverage.sour).toBeFalsy();
-  });
+	test("is not sour", () => {
+		expect(myBeverage.sour).toBeFalsy();
+	});
 });
-  ~~~
-_________
+```
+
+---
+
 # Snapshot
+
 - u - to update snapshot
 
-~~~javascript
-    it('renders correctly', () => {
-  const tree = renderer
-    .create(<Link page="http://www.instagram.com">Instagram</Link>)
-    .toJSON();
-  expect(tree).toMatchSnapshot();
+```javascript
+it("renders correctly", () => {
+	const tree = renderer
+		.create(<Link page="http://www.instagram.com">Instagram</Link>)
+		.toJSON();
+	expect(tree).toMatchSnapshot();
 });
-~~~
+```
 
 # Debugging
 
-~~~javascript
-screen.debug()
-~~~
+```javascript
+screen.debug();
+```
 
-|Error                                                       | Cause                                                                               | 
----                                                          | ---                                                                                 | 
-| Untable to find role                                       | Eihter role doesn't exist or no element matches name option                         |
-|An update to component inside a test was not wrapped in act | There was an update to the component state afte test completed. Use **await findBy**|
-|Can't perform a React state update on an unmounte component | There was an update to the component state afte test completed. Use **await findBy**|
-|Error: connect ECONNREFUSED 127.0.0.1                       | There isn't Mock Service Worker handler associated with this route and method       |
-
+| Error                                                       | Cause                                                                                |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Untable to find role                                        | Eihter role doesn't exist or no element matches name option                          |
+| An update to component inside a test was not wrapped in act | There was an update to the component state afte test completed. Use **await findBy** |
+| Can't perform a React state update on an unmounte component | There was an update to the component state afte test completed. Use **await findBy** |
+| Error: connect ECONNREFUSED 127.0.0.1                       | There isn't Mock Service Worker handler associated with this route and method        |
 
 # Unit Test x Functional tests
+
 - Test Behavior, not Code
-This means no testing of “implementation details” such as internal workings of Redux action creators and reducers, or mocking functions to return a specific value; instead, the test setup is done by entering text and clicking on the page as a user would. 
+  This means no testing of “implementation details” such as internal workings of Redux action creators and reducers, or mocking functions to return a specific value; instead, the test setup is done by entering text and clicking on the page as a user would.
 
 - Use unit tests when:
-my functional tests happen to test only one unit
-there’s a likely point of failure in a longer functional test
-I want to confirm that the correct data is sent to the server
-I’m testing edge cases for a helper function that don’t affect rendering
+  my functional tests happen to test only one unit
+  there’s a likely point of failure in a longer functional test
+  I want to confirm that the correct data is sent to the server
+  I’m testing edge cases for a helper function that don’t affect rendering
+
+---
+
+# Jest Mock as Props
+
+When use:
+
+- Added a prop to top level page Componentes (ex: setOrderPhase)
+- Ohter components also have functions as props (ex: updateitemcounte in sccopoption)
+- typescript validator
+
+Merely a placeholder to avoid errors
+
+```javascript
+jset.fn();
+```
+
+---
+
+# Common mistakes
+
+skip no use screen
+https://kentcdodds.com/blog/common-mistakes-with-react-testing-library
+
+---
+
+# Matchers
+
+## toHaveClass()
+
+```javascript
+it("Renders with a className equal extra", () => {
+	const deleteButton = getByTestId("delete-button");
+	const noClasses = getByTestId("no-classes");
+
+	expect(deleteButton).toHaveClass("extra");
+});
+```
+
+## { exact : false}
+
+- to match partial text
+- it doesn't work with getByRole
+
+```javascript
+const scoopsSubtotal = screen.getByText("Scoops total: $", { exact: false });
+```
+
+## toBe x toEqual (matchers)
+
+- toBe: numbers, strings
+- toEqual : arrays, objects
+
+```javascript
+const altText = scoopImages.map((element) => element.alt);
+expect(altText).toEqual(["Chocolate", "Vanilla"]);
+```
