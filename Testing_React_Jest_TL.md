@@ -81,18 +81,18 @@ npm install eslint-plugin-testing-library eslint-plugin-jest-dom
 
 ```html
 <script
-	src="https://unpkg.com/react/umd/react.production.min.js"
-	crossorigin
+  src="https://unpkg.com/react/umd/react.production.min.js"
+  crossorigin
 ></script>
 
 <script
-	src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"
-	crossorigin
+  src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"
+  crossorigin
 ></script>
 
 <script
-	src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js"
-	crossorigin
+  src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js"
+  crossorigin
 ></script>
 ```
 
@@ -111,6 +111,29 @@ npm install eslint-plugin-testing-library eslint-plugin-jest-dom
 npm install @testing-library/dom
 npm install @testing-library/user-event
 
+Breaking changes in user-event v14:
+
+use user-event 14, and call the setup function as described in the v14 docs.
+
+Example working test with user-event 14:
+
+```javascript
+test("Checkbox enables button on first click and disables on second click", async () => {
+  const user = userEvent.setup();
+  render(<SummaryForm />);
+  const checkbox = screen.getByRole("checkbox", {
+    name: /terms and conditions/i,
+  });
+  const confirmButton = screen.getByRole("button", { name: /confirm order/i });
+
+  await user.click(checkbox);
+  expect(confirmButton).toBeEnabled();
+
+  await user.click(checkbox);
+  expect(confirmButton).toBeDisabled();
+});
+```
+
 ### Pointer events options:
 
 - click
@@ -126,16 +149,16 @@ import userEvent from "@testing-library/user-event";
 import Tooltip from "../tooltip";
 
 test("hover", () => {
-	const messageText = "Hello";
-	render(
-		<Tooltip messageText={messageText}>
-			<TrashIcon aria-label="Delete" />
-		</Tooltip>
-	);
-	userEvent.hover(screen.getByLabelText(/delete/i));
-	expect(screen.getByText(messageText)).toBeInTheDocument();
-	userEvent.unhover(screen.getByLabelText(/delete/i));
-	expect(screen.queryByText(messageText)).not.toBeInTheDocument();
+  const messageText = "Hello";
+  render(
+    <Tooltip messageText={messageText}>
+      <TrashIcon aria-label="Delete" />
+    </Tooltip>
+  );
+  userEvent.hover(screen.getByLabelText(/delete/i));
+  expect(screen.getByText(messageText)).toBeInTheDocument();
+  userEvent.unhover(screen.getByLabelText(/delete/i));
+  expect(screen.queryByText(messageText)).not.toBeInTheDocument();
 });
 ```
 
@@ -153,10 +176,10 @@ import userEvent from "@testing-library/user-event";
 import userEvent from "@testing-library/user-event";
 
 test("type", () => {
-	render(<textarea />);
+  render(<textarea />);
 
-	userEvent.type(screen.getByRole("textbox"), "Hello,{enter}World!");
-	expect(screen.getByRole("textbox")).toHaveValue("Hello,\nWorld!");
+  userEvent.type(screen.getByRole("textbox"), "Hello,{enter}World!");
+  expect(screen.getByRole("textbox")).toHaveValue("Hello,\nWorld!");
 });
 ```
 
@@ -182,10 +205,10 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 test("clear", () => {
-	render(<textarea defaultValue="Hello, World!" />);
+  render(<textarea defaultValue="Hello, World!" />);
 
-	userEvent.clear(screen.getByRole("textbox"));
-	expect(screen.getByRole("textbox")).toHaveValue("");
+  userEvent.clear(screen.getByRole("textbox"));
+  expect(screen.getByRole("textbox")).toHaveValue("");
 });
 ```
 
@@ -238,13 +261,13 @@ https://kentcdodds.com/blog/write-fewer-longer-tests
 const setup = () => render(<MyComponent />);
 
 beforeEach(() => {
-	// other stuff...
+  // other stuff...
 });
 
 it("Should have foo and bar", () => {
-	setup();
-	expect(screen.getByText("foo")).toBeInTheDocument();
-	expect(screen.getByText("bar")).toBeInTheDocument();
+  setup();
+  expect(screen.getByText("foo")).toBeInTheDocument();
+  expect(screen.getByText("bar")).toBeInTheDocument();
 });
 ```
 
@@ -259,7 +282,7 @@ If you would like to allow the use of render (or a custom render function) in ei
 
 ```javascript
 await waitForElementToBeRemoved(() =>
-	screen.queryByText(/no ice cream will actually be delivered/i)
+  screen.queryByText(/no ice cream will actually be delivered/i)
 );
 ```
 
@@ -286,14 +309,14 @@ Create a folder
 import { rest } from "msw";
 
 export const handlers = [
-	rest.get("http://localhost:3030/scoops", (req, res, ctx) => {
-		return res(
-			ctx.json([
-				{ name: "Chocolate", imagePath: "/images/chocolate.png" },
-				{ name: "Vanilla", imagePath: "/images/vanilla.png" },
-			])
-		);
-	}),
+  rest.get("http://localhost:3030/scoops", (req, res, ctx) => {
+    return res(
+      ctx.json([
+        { name: "Chocolate", imagePath: "/images/chocolate.png" },
+        { name: "Vanilla", imagePath: "/images/vanilla.png" },
+      ])
+    );
+  }),
 ];
 ```
 
@@ -309,13 +332,13 @@ npm install axios
 
 ```javascript
 test("displays image for each scoop option from server", async () => {
-	render(<Options optionType="scoops" />);
+  render(<Options optionType="scoops" />);
 
-	const scoopImages = await screen.findAllByRole("img", { name: /scoop$/i });
-	expect(scoopImages).toHaveLength(2);
+  const scoopImages = await screen.findAllByRole("img", { name: /scoop$/i });
+  expect(scoopImages).toHaveLength(2);
 
-	const altText = scoopImages.map((element) => element.alt);
-	expect(altText).toEqual(["Chocolate Scoop", "Vanilla Scoop"]);
+  const altText = scoopImages.map((element) => element.alt);
+  expect(altText).toEqual(["Chocolate Scoop", "Vanilla Scoop"]);
 });
 ```
 
@@ -384,18 +407,18 @@ creates a block that groups together several related tests. For example, if you 
 
 ```javascript
 const myBeverage = {
-	delicious: true,
-	sour: false,
+  delicious: true,
+  sour: false,
 };
 
 describe("my beverage", () => {
-	test("is delicious", () => {
-		expect(myBeverage.delicious).toBeTruthy();
-	});
+  test("is delicious", () => {
+    expect(myBeverage.delicious).toBeTruthy();
+  });
 
-	test("is not sour", () => {
-		expect(myBeverage.sour).toBeFalsy();
-	});
+  test("is not sour", () => {
+    expect(myBeverage.sour).toBeFalsy();
+  });
 });
 ```
 
@@ -407,10 +430,10 @@ describe("my beverage", () => {
 
 ```javascript
 it("renders correctly", () => {
-	const tree = renderer
-		.create(<Link page="http://www.instagram.com">Instagram</Link>)
-		.toJSON();
-	expect(tree).toMatchSnapshot();
+  const tree = renderer
+    .create(<Link page="http://www.instagram.com">Instagram</Link>)
+    .toJSON();
+  expect(tree).toMatchSnapshot();
 });
 ```
 
@@ -469,10 +492,10 @@ https://kentcdodds.com/blog/common-mistakes-with-react-testing-library
 
 ```javascript
 it("Renders with a className equal extra", () => {
-	const deleteButton = getByTestId("delete-button");
-	const noClasses = getByTestId("no-classes");
+  const deleteButton = getByTestId("delete-button");
+  const noClasses = getByTestId("no-classes");
 
-	expect(deleteButton).toHaveClass("extra");
+  expect(deleteButton).toHaveClass("extra");
 });
 ```
 
@@ -494,3 +517,11 @@ const scoopsSubtotal = screen.getByText("Scoops total: $", { exact: false });
 const altText = scoopImages.map((element) => element.alt);
 expect(altText).toEqual(["Chocolate", "Vanilla"]);
 ```
+# Stand questions to ask
+- what's the smallest component possible that encompasses
+- do we need to pass any props
+- do we need to wrap, eg: provider;
+	-does the provider get used, it's already wrapped within the component
+- wich file
+- what queries and events
+- do you need to await

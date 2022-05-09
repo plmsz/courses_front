@@ -1,4 +1,13 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgb(77, 84, 179);
+  color: ivory;
+  min-height: 100vh;
 }
 
+ul {
+  list-style-type: none;
+}

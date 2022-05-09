@@ -9,8 +9,8 @@ const OrderEntry = ({ setOrderPhase }) => {
       <h1>Design Your Sundae!</h1>
       <Options optionType={"scoops"} />
       <Options optionType={"toppings"} />
-      <h2>Grand Total: {orderDetails.totals.grandTotal} </h2>
-      <Button variant="primary" onClick={() => setOrderPhase(1)}>
+      <h2>Grand Total: {orderDetails.totals.grandTotal}</h2>
+      <Button variant="dark" onClick={() => setOrderPhase(1)}>
         Order Sundae
       </Button>
     </div>

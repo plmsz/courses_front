@@ -23,11 +23,11 @@ const OrderConfirmation = ({ setOrderPhase }) => {
   }
 
   return (
-    <div styled={{textAlign: 'center'}}>
+    <div>
       <h1>Thank You!</h1>
       <h2>Your order number is {orderNumber}</h2>
       <p>as per our terms and conditions, nothing will happen now</p>
-      <Button variant="primary" onClick={()=>handleSubmit()}>
+      <Button variant="dark" onClick={()=>handleSubmit()}>
         Create a new order
       </Button>
     </ div>
