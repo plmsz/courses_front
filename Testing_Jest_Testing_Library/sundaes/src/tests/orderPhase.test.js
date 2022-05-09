@@ -41,8 +41,8 @@ test("order phases for happy path", async () => {
 	// check summary options items;
 
 	/* expect(screen.getByText('1 Vanilla')).toBeInTheDocument()
-    expect(screen.getByText('2 Chocolate')).toBeInTheDocument()
-    expect(screen.getByText('M&Ms')).toBeInTheDocument() */
+	expect(screen.getByText('2 Chocolate')).toBeInTheDocument()
+	expect(screen.getByText('M&Ms')).toBeInTheDocument() */
 
 	const optionItems = screen.getAllByRole("listitem");
 	const optionItemsText = optionItems.map((item) => item.textContent);
@@ -62,12 +62,18 @@ test("order phases for happy path", async () => {
 	});
 	userEvent.click(confirmOrderButton);
 
+	const loading = screen.getByText(/loading/i);
+	expect(loading).toBeInTheDocument();
+
 	//confirmation page and click new order
 	const thankYouHeader = await screen.findByRole("heading", {
 		name: /thank you/i,
 	});
-
 	expect(thankYouHeader).toBeInTheDocument();
+
+	const notLoading = screen.queryByText(/loading/i);
+	expect(notLoading).not.toBeInTheDocument();
+
 
 	const orderNumber = await screen.findByText(/order number/i);
 	expect(orderNumber).toBeInTheDocument();
