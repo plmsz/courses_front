@@ -1,5 +1,6 @@
 import { render, screen } from "../../../tests-utils/testing-library-utils";
 import Options from "../Options";
+import userEvent from '@testing-library/user-event';
 
 test("displays image for each scoop option from server", async () => {
 	render(<Options optionType="scoops" />);
@@ -30,4 +31,19 @@ test("displays image for each topping from server", async () => {
 		"M&Ms Topping",
 		"Hot fudge Topping",
 	]);
+});
+
+test(`subtotal scoops it doesn't change after type invalid value for scoops`, async () => {
+	render(<Options optionType='scoops' />);
+
+
+	const input = await screen.findByRole('spinbutton', { name: /vanilla/i });
+
+	userEvent.clear(input);
+	userEvent.type(input, '-1');
+
+	const subtotal = screen.getByText('Scoops total: $0.00');
+	expect(subtotal).toBeInTheDocument();
+
+
 });
