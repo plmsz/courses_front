@@ -118,6 +118,8 @@ use user-event 14, and call the setup function as described in the v14 docs.
 Example working test with user-event 14:
 
 ```javascript
+import userEvent from '@testing-library/user-event';
+
 test("Checkbox enables button on first click and disables on second click", async () => {
   const user = userEvent.setup();
   render(<SummaryForm />);
