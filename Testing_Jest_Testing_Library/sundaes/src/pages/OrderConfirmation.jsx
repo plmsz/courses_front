@@ -18,8 +18,8 @@ const OrderConfirmation = ({ setOrderPhase }) => {
   }, []);
 
   const handleSubmit = () => {
-    setOrderPhase(0);
     resetOrder();
+    setOrderPhase(0);
   };
 
   if (orderNumber) {

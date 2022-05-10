@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitForElementToBeRemoved } from "@testing-library/react";
 import App from "../App";
 import userEvent from "@testing-library/user-event";
 
@@ -62,23 +62,26 @@ test("order phases for happy path", async () => {
 	});
 	userEvent.click(confirmOrderButton);
 
+	// // Expect "loading" to show
 	const loading = screen.getByText(/loading/i);
 	expect(loading).toBeInTheDocument();
 
-	//confirmation page and click new order
-	const thankYouHeader = await screen.findByRole("heading", {
+	// check confirmation page text
+	// this one is async because there is a POST request to server in between summary
+	//    and confirmation pages
+	const thankYouHeader = await screen.findByRole('heading', {
 		name: /thank you/i,
 	});
 	expect(thankYouHeader).toBeInTheDocument();
 
+	// expect that loading has disappeared
 	const notLoading = screen.queryByText(/loading/i);
 	expect(notLoading).not.toBeInTheDocument();
 
-
 	const orderNumber = await screen.findByText(/order number/i);
 	expect(orderNumber).toBeInTheDocument();
-
-	const newOrderButton = screen.getByRole("button", { name: /New Order/i });
+	
+	const newOrderButton = screen.getByRole("button", { name: /new Order/i });
 	userEvent.click(newOrderButton);
 
 	// //check subtotals have been reset
