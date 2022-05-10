@@ -35,10 +35,22 @@ const SummaryForm = ({ setOrderPhase }) => {
     </li>
   ));
 
-  const toppingsArray = Array.from(orderDetails.toppings.keys());
-  const toppingsList = toppingsArray.map((key, value) => (
-    <li key={key}>{key}</li>
-  ));
+  let toppingsDisplay = null;
+
+  const hasToppings = orderDetails.totals.toppings !== "$0.00";
+
+  if (hasToppings) {
+    const toppingsArray = Array.from(orderDetails.toppings.keys());
+    const toppingsList = toppingsArray.map((key, value) => (
+      <li key={key}>{key}</li>
+    ));
+    toppingsDisplay = (
+      <>
+        <h2>Toppings: {orderDetails.totals.toppings}</h2>
+        <ul>{toppingsList}</ul>
+      </>
+    );
+  }
 
   return (
     <>
@@ -46,8 +58,7 @@ const SummaryForm = ({ setOrderPhase }) => {
         <h1>Order Summary</h1>
         <h2>Scoops: {orderDetails.totals.scoops}</h2>
         <ul>{scoopList}</ul>
-        <h2>Toppings: {orderDetails.totals.toppings}</h2>
-        <ul>{toppingsList}</ul>
+        {toppingsDisplay}
       </Container>
       <Form.Group
         controlId="terms"

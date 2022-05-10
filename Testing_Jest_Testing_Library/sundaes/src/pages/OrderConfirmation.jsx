@@ -34,7 +34,11 @@ const OrderConfirmation = ({ setOrderPhase }) => {
       </div>
     );
   } else {
-    return <div><h1>Loading</h1></div>;
+    return (
+      <div>
+        <h1>Loading</h1>
+      </div>
+    );
   }
 };
 
