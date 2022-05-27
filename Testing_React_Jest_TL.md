@@ -120,13 +120,13 @@ Example working test with user-event 14:
 ```javascript
 import userEvent from '@testing-library/user-event';
 
-test("Checkbox enables button on first click and disables on second click", async () => {
+test('Checkbox enables button on first click and disables on second click', async () => {
   const user = userEvent.setup();
   render(<SummaryForm />);
-  const checkbox = screen.getByRole("checkbox", {
+  const checkbox = screen.getByRole('checkbox', {
     name: /terms and conditions/i,
   });
-  const confirmButton = screen.getByRole("button", { name: /confirm order/i });
+  const confirmButton = screen.getByRole('button', { name: /confirm order/i });
 
   await user.click(checkbox);
   expect(confirmButton).toBeEnabled();
@@ -145,16 +145,16 @@ test("Checkbox enables button on first click and disables on second click", asyn
 - ### unhover
 
 ```javascript
-import React from "react";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import Tooltip from "../tooltip";
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import Tooltip from '../tooltip';
 
-test("hover", () => {
-  const messageText = "Hello";
+test('hover', () => {
+  const messageText = 'Hello';
   render(
     <Tooltip messageText={messageText}>
-      <TrashIcon aria-label="Delete" />
+      <TrashIcon aria-label='Delete' />
     </Tooltip>
   );
   userEvent.hover(screen.getByLabelText(/delete/i));
@@ -172,16 +172,16 @@ test("hover", () => {
 Writes text inside an `<input>` or a `<textarea>`
 
 ```javascript
-import React from "react";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import userEvent from "@testing-library/user-event";
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event';
 
-test("type", () => {
+test('type', () => {
   render(<textarea />);
 
-  userEvent.type(screen.getByRole("textbox"), "Hello,{enter}World!");
-  expect(screen.getByRole("textbox")).toHaveValue("Hello,\nWorld!");
+  userEvent.type(screen.getByRole('textbox'), 'Hello,{enter}World!');
+  expect(screen.getByRole('textbox')).toHaveValue('Hello,\nWorld!');
 });
 ```
 
@@ -202,15 +202,15 @@ Fires a tab event changing the document.activeElement in the same way the browse
 Selects the text inside an `<input>`or `<textarea>` and deletes it.
 
 ```javascript
-import React from "react";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
-test("clear", () => {
-  render(<textarea defaultValue="Hello, World!" />);
+test('clear', () => {
+  render(<textarea defaultValue='Hello, World!' />);
 
-  userEvent.clear(screen.getByRole("textbox"));
-  expect(screen.getByRole("textbox")).toHaveValue("");
+  userEvent.clear(screen.getByRole('textbox'));
+  expect(screen.getByRole('textbox')).toHaveValue('');
 });
 ```
 
@@ -219,6 +219,16 @@ test("clear", () => {
 Allows you to simulate the user pasting some text into an input.
 
 ---
+
+### select \*
+
+```javascript
+const dropdown = getSelectJobSituation();
+user.selectOptions(
+  dropdown,
+  within(dropdown).getByRole('option', { name: 'Full-time' })
+);
+```
 
 ## query methods
 
@@ -266,10 +276,10 @@ beforeEach(() => {
   // other stuff...
 });
 
-it("Should have foo and bar", () => {
+it('Should have foo and bar', () => {
   setup();
-  expect(screen.getByText("foo")).toBeInTheDocument();
-  expect(screen.getByText("bar")).toBeInTheDocument();
+  expect(screen.getByText('foo')).toBeInTheDocument();
+  expect(screen.getByText('bar')).toBeInTheDocument();
 });
 ```
 
@@ -308,14 +318,14 @@ Create a folder
 - handler.js
 
 ```javascript
-import { rest } from "msw";
+import { rest } from 'msw';
 
 export const handlers = [
-  rest.get("http://localhost:3030/scoops", (req, res, ctx) => {
+  rest.get('http://localhost:3030/scoops', (req, res, ctx) => {
     return res(
       ctx.json([
-        { name: "Chocolate", imagePath: "/images/chocolate.png" },
-        { name: "Vanilla", imagePath: "/images/vanilla.png" },
+        { name: 'Chocolate', imagePath: '/images/chocolate.png' },
+        { name: 'Vanilla', imagePath: '/images/vanilla.png' },
       ])
     );
   }),
@@ -333,14 +343,14 @@ https://mswjs.io/docs/getting-started/integrate/node
 npm install axios
 
 ```javascript
-test("displays image for each scoop option from server", async () => {
-  render(<Options optionType="scoops" />);
+test('displays image for each scoop option from server', async () => {
+  render(<Options optionType='scoops' />);
 
-  const scoopImages = await screen.findAllByRole("img", { name: /scoop$/i });
+  const scoopImages = await screen.findAllByRole('img', { name: /scoop$/i });
   expect(scoopImages).toHaveLength(2);
 
   const altText = scoopImages.map((element) => element.alt);
-  expect(altText).toEqual(["Chocolate Scoop", "Vanilla Scoop"]);
+  expect(altText).toEqual(['Chocolate Scoop', 'Vanilla Scoop']);
 });
 ```
 
@@ -372,8 +382,8 @@ test("handles error for scoops and toppings routes", async () => {
 Press p to identify a pattern and chose a file
 
 ```javascript
-test.skip("not a real test", () => {});
-test.only("execute only this test", () => {});
+test.skip('not a real test', () => {});
+test.only('execute only this test', () => {});
 ```
 
 # waitFor
@@ -392,7 +402,7 @@ await waitFor(() => expect(mockAPI).toHaveBeenCalledTimes(2));
 Wrapper option to render to apply context provider
 
 ```javascript
-render(<Options optionType="scoops" />, { wrapper: OrderDetailsProvider });
+render(<Options optionType='scoops' />, { wrapper: OrderDetailsProvider });
 ```
 
 # Custom Render
@@ -413,12 +423,12 @@ const myBeverage = {
   sour: false,
 };
 
-describe("my beverage", () => {
-  test("is delicious", () => {
+describe('my beverage', () => {
+  test('is delicious', () => {
     expect(myBeverage.delicious).toBeTruthy();
   });
 
-  test("is not sour", () => {
+  test('is not sour', () => {
     expect(myBeverage.sour).toBeFalsy();
   });
 });
@@ -431,9 +441,9 @@ describe("my beverage", () => {
 - u - to update snapshot
 
 ```javascript
-it("renders correctly", () => {
+it('renders correctly', () => {
   const tree = renderer
-    .create(<Link page="http://www.instagram.com">Instagram</Link>)
+    .create(<Link page='http://www.instagram.com'>Instagram</Link>)
     .toJSON();
   expect(tree).toMatchSnapshot();
 });
@@ -493,12 +503,37 @@ https://kentcdodds.com/blog/common-mistakes-with-react-testing-library
 ## toHaveClass()
 
 ```javascript
-it("Renders with a className equal extra", () => {
-  const deleteButton = getByTestId("delete-button");
-  const noClasses = getByTestId("no-classes");
+it('Renders with a className equal extra', () => {
+  const deleteButton = getByTestId('delete-button');
+  const noClasses = getByTestId('no-classes');
 
-  expect(deleteButton).toHaveClass("extra");
+  expect(deleteButton).toHaveClass('extra');
 });
+```
+## toHaveErrorMessage()
+
+This allows you to check whether the given element has an ARIA error message or not.
+
+```javascript
+<label for="startTime"> Please enter a start time for the meeting: </label>
+<input
+  id="startTime"
+  type="text"
+  aria-errormessage="msgID"
+  aria-invalid="true"
+  value="11:30 PM"
+/>
+<span id="msgID" aria-live="assertive" style="visibility:visible">
+  Invalid time: the time must be between 9:00 AM and 5:00 PM
+</span>
+
+const timeInput = getByLabel('startTime')
+
+expect(timeInput).toHaveErrorMessage(
+  'Invalid time: the time must be between 9:00 AM and 5:00 PM',
+)
+expect(timeInput).toHaveErrorMessage(/invalid time/i) // to partially match
+expect(timeInput).not.toHaveErrorMessage('Pikachu!')
 ```
 
 ## { exact : false}
@@ -507,7 +542,7 @@ it("Renders with a className equal extra", () => {
 - it doesn't work with getByRole
 
 ```javascript
-const scoopsSubtotal = screen.getByText("Scoops total: $", { exact: false });
+const scoopsSubtotal = screen.getByText('Scoops total: $', { exact: false });
 ```
 
 ## toBe x toEqual (matchers)
@@ -517,13 +552,15 @@ const scoopsSubtotal = screen.getByText("Scoops total: $", { exact: false });
 
 ```javascript
 const altText = scoopImages.map((element) => element.alt);
-expect(altText).toEqual(["Chocolate", "Vanilla"]);
+expect(altText).toEqual(['Chocolate', 'Vanilla']);
 ```
+
 # Stand questions to ask
+
 - what's the smallest component possible that encompasses
 - do we need to pass any props
 - do we need to wrap, eg: provider;
-	-does the provider get used, it's already wrapped within the component
+  -does the provider get used, it's already wrapped within the component
 - wich file
 - what queries and events
 - do you need to await
