@@ -1,3 +1,4 @@
+//TODO: Terminar form-testing
 # Accessiblity and Queries
 
 https://www.w3.org/TR/wai-aria/#role_definitions
@@ -172,10 +173,10 @@ test('hover', () => {
 Writes text inside an `<input>` or a `<textarea>`
 
 ```javascript
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import userEvent from '@testing-library/user-event';
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+
 
 test('type', () => {
   render(<textarea />);
