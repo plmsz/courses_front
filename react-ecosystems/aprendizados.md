@@ -1,0 +1,10 @@
+Criar app, html, css e .babelrc:
+
+{
+  "presets": ["@babel/preset-env", "@babel/preset-react"]
+}
+
+---
+https://blog.tericcabrel.com/setup-a-react-project-with-typescript-hot-reload-and-webpack/
+https://blog.devgenius.io/create-react-app-from-scratch-using-webpack-fa6e41f15289
+https://github.com/pmmmwh/react-refresh-webpack-plugin/
