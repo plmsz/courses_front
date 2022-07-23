@@ -1,9 +1,13 @@
 import React from 'react';
 import './App.css';
+import Card from './components/card';
+import Input from './components/input';
 
 const App = () => (
     <div className='App'>
-        <h1>this is the bad place</h1>
+        <input type='text' placeholder='Type your new todo here' />
+        <Input />
+        <Card /> 
     </div>
 );
 
