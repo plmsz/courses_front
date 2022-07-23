@@ -187,7 +187,6 @@ test('type', () => {
 ```
 
 ### keyboard(text, options)
-
 Simulates the keyboard events described by text. This is similar to userEvent.type() but without any clicking or changing the selection range
 
 ### upload(element, file, [{ clickInit, changeInit }], [options])

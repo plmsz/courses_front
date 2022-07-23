@@ -1,0 +1,13 @@
+.AddCard__container {
+  display: flex;
+  box-shadow: 0 10px 15px 1px grey;
+  background: #f6f4f4e6;
+  border-radius: 5px;
+  width: 70%;
+  padding: 0.6rem;
+  justify-content: space-between;
+}
+
+.AddCard__container input {
+  flex: 0.9;
+}
