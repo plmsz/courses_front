@@ -1,6 +1,13 @@
 import './style.css';
 
-function Card({ id, title, created_at, done, onRemove, onClick }) {
+function TodoListItem({
+  id,
+  title,
+  created_at,
+  done,
+  onRemove,
+  handleComplete,
+}) {
   return (
     <div className='card__container'>
       <p>{title}</p>
@@ -8,7 +15,9 @@ function Card({ id, title, created_at, done, onRemove, onClick }) {
         <span>Created at: {created_at}</span>
         <div className='card__buttons'>
           {!done && (
-            <button onClick={() => onClick(id)}>Mark as Completed</button>
+            <button onClick={() => handleComplete(id)}>
+              Mark as Completed
+            </button>
           )}
           <button onClick={() => onRemove(id)}>Remove</button>
         </div>
@@ -17,4 +26,4 @@ function Card({ id, title, created_at, done, onRemove, onClick }) {
   );
 }
 
-export default Card;
+export default TodoListItem;

@@ -1,8 +1,7 @@
+import { useState } from 'react';
 import './App.css';
 import AddCard from './components/AddCard';
-import Card from './components/Card';
-import { useState } from 'react';
-
+import TodoList from './components/TodoList';
 
 function App() {
   const [taskname, setTaskname] = useState('');
@@ -41,18 +40,10 @@ function App() {
     setTodos(newList);
   }
 
-
   return (
     <div className="App">
       <AddCard handleAddCard={handleAddCard} setTaskname={setTaskname} />
-      <h2>Complete</h2>
-      {todos.filter(item => item.done === true).map((todo) =>
-        <Card {...todo} key={todo.id} onRemove={handleRemove} />
-      )}
-      <h2>Incomplete</h2>
-      {todos.filter(item => item.done === false).map((todo) =>
-        <Card {...todo} key={todo.id} onRemove={handleRemove} onClick={handleComplete} />
-      )}
+      <TodoList todos={todos} handleRemove={handleRemove} handleComplete={handleComplete} />
     </div>
   );
 }
