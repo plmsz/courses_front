@@ -1,0 +1,7 @@
+.App {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #222;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
