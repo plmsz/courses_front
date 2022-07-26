@@ -3,7 +3,7 @@ import './TodoListItem.css';
 
 const TodoListItem = ({ todo, onRemovePressed, onCompletedPressed }) => (
     <div className="todo-item-container">
-        <h3>{todo.text}</h3>
+        <h3 className={`${todo.isCompleted ? 'line-through' : null}`}>{todo.text}</h3>
         <div className="buttons-container">
             {todo.isCompleted
                 ? null
@@ -14,7 +14,7 @@ const TodoListItem = ({ todo, onRemovePressed, onCompletedPressed }) => (
                 onClick={() => onRemovePressed(todo.text)}
                 className="remove-button">Remove</button>
         </div>
-    </div>
+    </div >
 );
 
 export default TodoListItem;
