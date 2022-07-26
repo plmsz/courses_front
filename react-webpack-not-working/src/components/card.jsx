@@ -1,4 +1,4 @@
-function Card() {
+export function Card() {
   return (
     <>
       <h1>Card</h1>
@@ -6,4 +6,4 @@ function Card() {
   );
 }
 
-export default Card;
+

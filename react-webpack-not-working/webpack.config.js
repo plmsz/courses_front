@@ -8,19 +8,24 @@ module.exports = {
     mode: isDevelopment ? "development" : "production",
     output: {
         path: path.resolve(__dirname, "dist"),
-        filename: "bundle.js"
+        filename: "bundle.js",
+        publicPath: '/'
     },
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader',
+                use: 'babel-loader',
             },
             {
                 test: /\.css$/i,
                 use: ["style-loader", "css-loader"],
             },
+            {
+                test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
+                type: 'asset',
+            }
         ]
     },
     resolve: {
