@@ -5,6 +5,7 @@ import TodoListItem from './TodoListItem';
 import { completeTodoRequest, loadTodos, removeTodoRequest } from './thunks';
 
 import './TodoList.css';
+import { getTodosLoading, getTodos } from './selectors';
 
 const TodoList = ({ todos = [], onRemovePressed, onCompletedPressed, isLoading, startLoadingTodos }) => {
 
@@ -26,8 +27,8 @@ const TodoList = ({ todos = [], onRemovePressed, onCompletedPressed, isLoading, 
 };
 
 const mapStateToProps = state => ({
-    isLoading: state.isLoading,
-    todos: state.todos,
+    isLoading: getTodosLoading(state),
+    todos: getTodos(state)
 });
 
 const mapDispatchToProps = dispatch => ({
