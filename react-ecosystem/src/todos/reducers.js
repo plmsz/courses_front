@@ -25,22 +25,18 @@ export const todos = (state = [], action) => {
 
     switch (type) {
         case CREATE_TODO: {
-            const { text } = payload;
-            const newTodo = {
-                text,
-                isCompleted: false,
-            };
-            return state.concat(newTodo);
+            const { todo } = payload;
+            return state.concat(todo);
         }
         case REMOVE_TODO: {
-            const { text } = payload;
-            return state.filter(todo => todo.text !== text);
+            const { todo : todoToRemove} = payload;
+            return state.filter(todo => todoToRemove.id !== todo.id);
         }
         case MARK_TODO_AS_COMPLETED: {
-            const { text } = payload;
+            const { todo: updatedTodo } = payload;
             return state.map(todo => {
-                if (todo.text === text) {
-                    return { ...todo, isCompleted: true };
+                if (updatedTodo.id === todo.id) {
+                    return updatedTodo;
                 }
                 return todo;
             });
