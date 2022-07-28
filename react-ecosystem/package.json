@@ -15,6 +15,7 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.1",
     "reselect": "^4.1.6",
+    "styled-components": "^5.3.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -40,5 +41,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "msw": "^0.44.2"
   }
 }

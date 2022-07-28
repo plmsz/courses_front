@@ -79,6 +79,46 @@ export const Button = styled.button`
 </Button>
 ```
 
+# Extended style + render difernt components
+
+```js
+import styled from 'styled-components';
+
+const TodoItemContainer = styled.div`
+    background: #fff;
+    border-radius: 8px;
+    margin-top: 8px;
+    padding: 16px;
+    position: relative;
+    box-shadow: 0 4px 8px grey;
+`;
+
+const TodoItemContainerWithWarning = styled(TodoItemContainer)`
+    border: ${props => (new Date(props.createdAt) > new Date(Date.now() - 86400000 * 5)
+        ? 'none' : '1px solid #eb7979;'
+    )};
+`;
+
+const Heading = styled.h3`
+    color: ${props => props.isCompleted ? "#73ed73" : "#000000"};
+    text-decoration: ${props => props.isCompleted ? "line-through #69d669" : "none"};
+`;
+
+
+const TodoListItem = ({ todo, onRemovePressed, onCompletedPressed }) => {
+    const Container = todo.isCompleted ? TodoItemContainer : TodoItemContainerWithWarning
+
+    return (
+        <Container createdAt={todo.createdAt}>
+            <Heading isCompleted={todo.isCompleted}>{todo.text}</Heading>
+            <p>Created at:&nbsp;
+                {(new Date(todo.createdAt).toLocaleDateString())}
+            </p>
+        </Container>
+    )
+};
+
+```
 ## Diferent layout with props
 
 ```javascript

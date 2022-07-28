@@ -17,7 +17,7 @@ export const todos = (state = initialState, action) => {
             const { todo } = payload;
             return {
                 ...state,
-                data: state.data.concat(todo),
+                data: state.data?.concat(todo),
             };
         }
         case REMOVE_TODO: {
