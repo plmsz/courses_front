@@ -7,7 +7,7 @@ test("order phases for happy path", async () => {
 
 	//add ice creeam
 	const vanillaInput = await screen.findByRole("spinbutton", {
-		name: "Vanilla",
+		name: "Chocolate",
 	});
 
 	userEvent.clear(vanillaInput);

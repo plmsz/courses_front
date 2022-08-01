@@ -78,7 +78,98 @@ export const Button = styled.button`
   Get Started For Free
 </Button>
 ```
+# Atributes
 
+```javascript
+const Input = styled.input.attrs(props => ({
+  type: 'text',
+  size: props.small ? 5 : undefined,
+}))`
+  border-radius: 3px;
+  border: 1px solid palevioletred;
+  display: block;
+  margin: 0 0 1em;
+  padding: ${props => props.padding};
+
+  ::placeholder {
+    color: palevioletred;
+  }
+`
+
+render(
+  <>
+    <Input small placeholder="Small" />
+    <Input placeholder="Normal" />
+    <Input padding="2em" placeholder="Padded" />
+  </>
+)
+
+```
+
+```javascript
+export const StyledButton = styled.button`
+border: 2px solid #4FFF;
+color: #fff;
+padding: 15px.
+text-align: center;
+cursor: pointer;
+transition: 0.5s all ease-out;
+&:hover {
+  background-color: #4caf50;
+}
+`
+
+export const SubmitedButton = styled(StyledButton).attrs({
+  type: 'submit'
+})`
+box-shadow: 0 9px #999;
+&:active {
+  background-color: #4caf50
+  box-shadow: 0 9px #666;
+  transform: translateY(4px);
+}
+```
+
+# Extended style + render difernt components
+
+```js
+import styled from 'styled-components';
+
+const TodoItemContainer = styled.div`
+    background: #fff;
+    border-radius: 8px;
+    margin-top: 8px;
+    padding: 16px;
+    position: relative;
+    box-shadow: 0 4px 8px grey;
+`;
+
+const TodoItemContainerWithWarning = styled(TodoItemContainer)`
+    border: ${props => (new Date(props.createdAt) > new Date(Date.now() - 86400000 * 5)
+        ? 'none' : '1px solid #eb7979;'
+    )};
+`;
+
+const Heading = styled.h3`
+    color: ${props => props.isCompleted ? "#73ed73" : "#000000"};
+    text-decoration: ${props => props.isCompleted ? "line-through #69d669" : "none"};
+`;
+
+
+const TodoListItem = ({ todo, onRemovePressed, onCompletedPressed }) => {
+    const Container = todo.isCompleted ? TodoItemContainer : TodoItemContainerWithWarning
+
+    return (
+        <Container createdAt={todo.createdAt}>
+            <Heading isCompleted={todo.isCompleted}>{todo.text}</Heading>
+            <p>Created at:&nbsp;
+                {(new Date(todo.createdAt).toLocaleDateString())}
+            </p>
+        </Container>
+    )
+};
+
+```
 ## Diferent layout with props
 
 ```javascript
@@ -88,12 +179,21 @@ export const StyledCard = styled.div`
   flex-direction: ${({ layout }) => layout || 'row'};
 `
 
- <StyledCard layout={id % 2 === 0 && 'row-reverse'}>
+ export default function Card({ item: { id, title, body, image } }) {
+  return (
+    <StyledCard layout={id % 2 === 0 && 'row-reverse'}>
       <div>
         <h2>{title}</h2>
         <p>{body}</p>
       </div>
+
+      <div>
+        <img src={`./images/${image}`} alt='' />
+      </div>
     </StyledCard>
+  )
+}
+
 
 ```
 
