@@ -284,3 +284,20 @@ criará automaticamente a passta storybook-static
 
 # publish
 https://storybook.js.org/docs/react/sharing/publish-storybook#publish-storybook-with-chromatic
+
+# Criando um array de um sequencia de números
+
+~~~~js
+const n = 3
+const a = Array.from({n}, (v, k) => k); // [1,2,3]
+[ ...Array(n).keys() ].map( i => i+1); // [1,2,3]
+
+/* var foo = new Array(N);   // where N is a positive integer
+
+this will create an array of size, N, primarily for memory allocation, 
+but does not create any defined values
+
+Making use of the spread operator (...) and keys method, enables you to create a temporary array of size N to produce the indexes, and then a new array that can be assigned to your variable: */
+const b = [...Array(n).keys()]
+// [0,1,2,3]
+~~~~
