@@ -1,70 +1,286 @@
-# Getting Started with Create React App
+# Getting Started
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+npx create-react-app app-name
+npx sb init
+npm run storybook
 
-## Available Scripts
+# rename a story
 
-In the project directory, you can run:
+InputRegular.storyName = 'Medium Input'
 
-### `npm start`
+# sorting stories (não funcionou)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+options: {
+storySort: (a, b) =>
+a[1].kind === b[1].kind ? 0 : a[1].id.localeCompare(b[1].id, undefined, { numeric: true }),
+},
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# story within a story
 
-### `npm test`
+- possivel juntar dois componentes e uma story, se else não usarem args
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Extendendo com args
 
-### `npm run build`
+```js
+export const Tomato = Template.bind({});
+Tomato.args = {
+	backgroundColor: "tomato",
+	label: "Press me now",
+	size: "md",
+};
+export const LargeTomato = Template.bind({});
+LargeTomato.args = {
+	...Tomato.args,
+	size: "lg",
+};
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Theme and decorators
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- https://github.com/mui/material-ui/issues/24282 Mui
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Não funcionou
 
-### `npm run eject`
+```js
+import { Button } from '@chakra-ui/react';
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+export default {
+    title: 'Chakra/Button',
+    component: Button,
+};
+export const Success = () => <Button variantColor='green' title='Success'>Success</Button>;
+export const Error = () => <Button variantColor='red' title='Error'>Error</Button>;
+---
+import React from 'react';
+import { Theme Provider, theme, CSSReset } from '@chakra-ui/core';
+import { React } from 'react';
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+export const parameters = {
+  actions: { argTypesRegex: "^on[A-Z].*" },
+  options: {
+    storySort: (a, b) =>
+      a[1].kind === b[1].kind ? 0 : a[1].id.localeCompare(b[1].id, undefined, { numeric: true }),
+  },
+  controls: {
+    matchers: {
+      color: /(background|color)$/i,
+      date: /Date$/,
+    },
+  },
+};
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+export const decorators = [
+  (Story, context) => (
+    <ThemeProvider theme={theme}>
+      <CSSReset />
+      <Story {...context} />
+    </ThemeProvider>
+  )
+];
+---
+import { Button } from '@mui';
 
-## Learn More
+export default {
+    title: 'Mui/Button',
+    component: Button,
+};
+export const Success = () => <Button variant='primary'>Success</Button>;
+export const Error = () => <Button variant='error' title='Error'>Error</Button>;
+--
+const defaultTheme = createTheme(); // or your custom theme
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+const withThemeProvider = (Story, context) => {
+  return (
+    <Emotion10ThemeProvider theme={defaultTheme}>
+      <ThemeProvider theme={defaultTheme}>
+        <Story {...context} />
+      </ThemeProvider>
+    </Emotion10ThemeProvider>
+  );
+};
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+export const decorators = [withThemeProvider];
+```
 
-### Code Splitting
+# Addons
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+=> Background (já instalado, pode modificar)
+https://storybook.js.org/docs/react/essentials/backgrounds
+// .storybook/preview.js
 
-### Analyzing the Bundle Size
+```js
+export const parameters = {
+	backgrounds: {
+		default: "twitter",
+		values: [
+			{
+				name: "twitter",
+				value: "#00aced",
+			},
+			{
+				name: "facebook",
+				value: "#3b5998",
+			},
+		],
+	},
+};
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+You can also define backgrounds per-component or per-story basis through parameter inheritance:
 
-### Making a Progressive Web App
+```js
+// Button.stories.js|jsx|ts|tsx
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+import { Button } from "./Button";
 
-### Advanced Configuration
+// To apply a set of backgrounds to all stories of Button:
+export default {
+	title: "Button",
+	component: Button,
+	parameters: {
+		backgrounds: {
+			default: "twitter",
+			values: [
+				{ name: "twitter", value: "#00aced" },
+				{ name: "facebook", value: "#3b5998" },
+			],
+		},
+	},
+};
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+You can also override a single key on the backgrounds parameter, for instance, to set a different default value for a particular story:
 
-### Deployment
+```js
+// Button.stories.js|jsx|ts|tsx
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+import { Button } from "./Button";
 
-### `npm run build` fails to minify
+export default {
+	title: "Button",
+	component: Button,
+};
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+const Template = (args) => ({
+	//👇 Your template goes here
+});
+
+export const Large = Template.bind({});
+Large.parameters = {
+	backgrounds: { default: "facebook" },
+};
+```
+
+=> console
+npm i @storybook/addon-console @storybook/addon-actions --save-dev
+
+// config.js
+
+import '@storybook/addon-console';
+
+import { addDecorator } from '@storybook/react';
+import { withConsole } from '@storybook/addon-console';
+
+addDecorator((storyFn, context) => withConsole()(storyFn)(context));
+
+--
+
+https://storybook.js.org/tutorials/intro-to-storybook/react/en/simple-component/
+https://storybook.js.org/tutorials/design-systems-for-developers/
+
+## Controls
+
+    - knobs ( will be deprecated)
+
+https://www.npmjs.com/package/@storybook/addon-controls
+
+### disabled button
+
+```js
+import PropTypes from "prop-types";
+
+function Button({ label, backgroundColor = "tomato", disabled }) {
+	const style = {
+		backgroundColor,
+		cursor: `${disabled ? "not-allowed" : "pointer"}`,
+		opacity: `${disabled && "0.75"}`,
+	};
+	return (
+		<button style={style} disabled={disabled}>
+			{label}
+		</button>
+	);
+}
+
+Button.propTypes = {
+	label: PropTypes.string,
+	backgroundColor: PropTypes.string,
+	disabled: PropTypes.bool,
+};
+
+export default Button;
+
+//Button.stories.js
+export const Controls = Template.bind({});
+Controls.args = {
+	label: `I'm disabled`,
+	disabled: true,
+};
+```
+
+Veja mais em:
+https://github.com/MinsterRobin/storybook-button
+
+## Custom Viewporty
+
+```js
+import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
+
+const customViewports = {
+	kindleFire2: {
+		name: "Kindle Fire 2",
+		styles: {
+			width: "600px",
+			height: "963px",
+		},
+	},
+	kindleFireHD: {
+		name: "Kindle Fire HD",
+		styles: {
+			width: "533px",
+			height: "801px",
+		},
+	},
+};
+
+export const parameters = {
+	actions: { argTypesRegex: "^on[A-Z].*" },
+	controls: {
+		matchers: {
+			color: /(background|color)$/i,
+			date: /Date$/,
+		},
+	},
+	viewport: {
+		viewports: { ...INITIAL_VIEWPORTS, ...customViewports },
+	},
+};
+```
+
+## a11
+https://storybook.js.org/addons/@storybook/addon-a11y/
+~~~js
+	module.exports = {
+	addons: ['@storybook/addon-a11y'],
+	};
+~~~
+# env
+https://storybook.js.org/docs/react/configure/environment-variables
+
+# build 
+npm build-storybook
+criará automaticamente a passta storybook-static
+
+# publish
+https://storybook.js.org/docs/react/sharing/publish-storybook#publish-storybook-with-chromatic

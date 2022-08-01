@@ -2,9 +2,18 @@
 import Input from '../components/Input';
 
 export default {
-    title: 'Components/Input',
-    component: Input,
-    argTypes: { handleChange: {action: 'digitando' } }
+	title: "Components/Input",
+	component: Input,
+	argTypes: { handleChange: { action: "digitando" } },
+	parameters: {
+		backgrounds: {
+			default: "twitter",
+			values: [
+				{ name: "twitter", value: "#00aced" },
+				{ name: "facebook", value: "#3b5998" },
+			],
+		},
+	},
 };
 
 const Template = args => <Input {...args} />;
