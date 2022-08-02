@@ -3,6 +3,10 @@ const createStore = redux.createStore;
 const bindActionCreators = redux.bindActionCreators
 const combineReducers = redux.combineReducers
 
+const applyMiddleware = require('redux').applyMiddleware
+const reduxLogger = require('redux-logger')
+const logger = reduxLogger.createLogger()
+
 const CAKE_ORDERED = 'CAKE_ORDERERD';
 const CAKE_RESTOCKED = 'CAKE_RESTOCKED';
 const ICECREAM_RESTOCKED = 'ICECREAM_RESTOCKED';
@@ -80,13 +84,14 @@ const rootReducer = combineReducers({
     iceCream: iceCreamReducer
 })
 
-const store = createStore(rootReducer);  // holds application state
+const store = createStore(rootReducer, applyMiddleware(logger));  // holds application state
 
 console.log('Initial state:', store.getState()); // allow access to state via getState method
 
-const unsubscribe = store.subscribe(() => console.log('update state', store.getState())); //register listeners 
+// const unsubscribe = store.subscribe(() => console.log('update state', store.getState())); //register listeners 
+const unsubscribe = store.subscribe(() => {}); //register listeners 
 
-// store.dispatch(orderCake()); //allows statete to be updated via dispatch
+// store.dispatch(orderCake()); //allows state to be updated via dispatch
 // store.dispatch(orderCake());
 // store.dispatch(orderCake());
 
@@ -101,7 +106,3 @@ actions.orderIceCream()
 actions.restockIceCream(1)
 
 unsubscribe();  // handles unregistering of listeners via the function returned by subscribe
-
-
-
-
