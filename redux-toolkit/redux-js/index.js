@@ -1,11 +1,11 @@
 const redux = require('redux');
 const createStore = redux.createStore;
-const bindActionCreators = redux.bindActionCreators
-const combineReducers = redux.combineReducers
+const bindActionCreators = redux.bindActionCreators;
+const combineReducers = redux.combineReducers;
 
-const applyMiddleware = require('redux').applyMiddleware
-const reduxLogger = require('redux-logger')
-const logger = reduxLogger.createLogger()
+const applyMiddleware = require('redux').applyMiddleware;
+const reduxLogger = require('redux-logger');
+const logger = reduxLogger.createLogger();
 
 const CAKE_ORDERED = 'CAKE_ORDERERD';
 const CAKE_RESTOCKED = 'CAKE_RESTOCKED';
@@ -30,13 +30,13 @@ function orderIceCream(quantity = 1) {
     return {
         type: ICECREAM_ORDERED,
         payload: quantity,
-    }
+    };
 }
 function restockIceCream(quantity = 1) {
     return {
         type: ICECREAM_RESTOCKED,
         payload: quantity,
-    }
+    };
 }
 
 const initialCakeState = {
@@ -74,35 +74,40 @@ const iceCreamReducer = (state = initialIceCreamState, action) => {
                 ...state,
                 numberOfIceCreams: state.numberOfIceCreams + action.payload
             };
+        case CAKE_ORDERED:  // promotion if we get a cake you will get a ice cream, to show that it reducers can update nly its portion of app state but it can responde to any actio dispatched
+            return {
+                ...state,
+                numberOfIceCreams: state.numberOfIceCreams - 1 // so ice cream reducer can only update the number of ice creams but it can respond to the cake ordered action type
+            };
         default:
             return state;
     }
 };
 
 const rootReducer = combineReducers({
-    cake: cakeReducer, 
+    cake: cakeReducer,
     iceCream: iceCreamReducer
-})
+});
 
 const store = createStore(rootReducer, applyMiddleware(logger));  // holds application state
 
 console.log('Initial state:', store.getState()); // allow access to state via getState method
 
 // const unsubscribe = store.subscribe(() => console.log('update state', store.getState())); //register listeners 
-const unsubscribe = store.subscribe(() => {}); //register listeners 
+const unsubscribe = store.subscribe(() => { }); //register listeners 
 
 // store.dispatch(orderCake()); //allows state to be updated via dispatch
 // store.dispatch(orderCake());
 // store.dispatch(orderCake());
 
-const actions = bindActionCreators({orderCake, restockCake, orderIceCream, restockIceCream}, store.dispatch)
+const actions = bindActionCreators({ orderCake, restockCake, orderIceCream, restockIceCream }, store.dispatch);
 
-actions.orderCake()
-actions.orderCake()
-actions.orderCake()
-actions.restockCake(3)
+actions.orderCake();
+actions.orderCake();
+actions.orderCake();
+actions.restockCake(3);
 
-actions.orderIceCream()
-actions.restockIceCream(1)
+actions.orderIceCream();
+actions.restockIceCream(4);
 
 unsubscribe();  // handles unregistering of listeners via the function returned by subscribe
