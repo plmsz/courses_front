@@ -1,10 +1,16 @@
 const redux = require('redux');
-const store = redux.store
+const reduxThunk = require('redux-thunk').default;
+const axios = require('axios');
+
+const applyMiddleware = redux.applyMiddleware;
+const createStore = redux.createStore;
+
 const initialState = {
     loading: false,
     users: [],
     error: '',
 };
+
 
 const FETCH_USERS_REQUESTED = 'FETCH_USERS_REQUESTED';
 const FETCH_USERS_SUCCEEDED = 'FETCH_USERS_SUCCEEDED';
@@ -15,7 +21,7 @@ const fecthUsersRequest = (error) => {
         type: FETCH_USERS_REQUESTED
     };
 };
-const fecthUsersFailure = (users) => {
+const fecthUsersSuccess = (users) => {
     return {
         type: FETCH_USERS_SUCCEEDED,
         payload: users
@@ -23,7 +29,7 @@ const fecthUsersFailure = (users) => {
 };
 const fecthUsersFailure = (error) => {
     return {
-        type: FETCH_USERS_FAILED
+        type: FETCH_USERS_FAILED,
         payload: error
     };
 };
@@ -35,22 +41,39 @@ const reducer = (state = initialState, action) => {
             ...state,
             loading: true,
          }
-        default:
         case FETCH_USERS_SUCCEEDED:
          return {
             loading: false,
-            data: action.payload
+            data: action.payload,
             error: ''
          }
         case FETCH_USERS_FAILED:
          return {
             loading: false,
-            useres: []
+            users: [],
             error: action.payload
          }
         default:
-            break;
+            return state;
     }
 };
 
-const store = createStore(reducer)
+const fetchUsers = () =>{
+    return function(dispatch){
+        dispatch(fecthUsersRequest())
+        axios.get('http://jsonplaceholder.typicode.com/users')
+        .then(response => {
+            const users = response.data.map((user) => user.username)
+            dispatch(fecthUsersSuccess(users)) 
+        })
+        .catch((error)  => {
+            dispatch(fecthUsersFailure(error.message))
+        })
+    }
+}
+
+const store = createStore(reducer, applyMiddleware(reduxThunk))
+
+store.subscribe(() => {console.log(store.getState())})
+
+store.dispatch(fetchUsers() )
