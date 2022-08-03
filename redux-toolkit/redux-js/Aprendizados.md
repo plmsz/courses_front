@@ -38,3 +38,6 @@ const reduxLogger = require('redux-logger')
 const logger = reduxLogger.createLogger()
 
 const store = createStore(rootReducer, applyMiddleware(logger)); 
+
+-
+npm i @reduxjs/toolkit
