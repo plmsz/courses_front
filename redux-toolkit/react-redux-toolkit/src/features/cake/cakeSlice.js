@@ -18,4 +18,4 @@ const cakeSlice = createSlice({
 });
 
 export default cakeSlice.reducer;
-export { ordered, restocked } = cakeSlice;
+export const { ordered, restocked } = cakeSlice.actions
