@@ -1,36 +1,61 @@
-import "./App.css";
-import State from "./components/State/State";
-import Effect from "./components/Effect/Effect";
+import './App.css';
+import { useRoutes } from 'react-router-dom';
+import Home from './pages/Home/Home';
+import { State } from './pages/State/State';
+import Effect from './pages/Effect/Effect';
+import Dependencies from './pages/Effect/Dependencies';
+import Cleanup from './pages/Effect/Cleanup';
+import { FetchAbort } from './pages/Effect/FetchAndAbort';
+
+export function Routes() {
+  const elements = useRoutes([
+    {
+      path: '/',
+      element: <Home />,
+    },
+    {
+      path: '/state',
+      element: (
+        <div className='container'>
+          <State />
+        </div>
+      ),
+    },
+    {
+      path: '/ue',
+      element: (
+        <div className='container'>
+          <Effect />
+          <Dependencies />
+        </div>
+      ),
+    },
+    {
+      path: '/uecleanup',
+      element: (
+        <div className='container'>
+          <Cleanup />
+        </div>
+      ),
+    },
+    {
+      path: '/uecleanup',
+      element: (
+        <div className='container'>
+          <FetchAbort />
+        </div>
+      ),
+    },
+  ]);
+  return elements;
+}
 
 function App() {
-	return (
-		<div className="App">
-			<div className="container">
-        <h1>useState</h1>
-				<State />
-			</div>
-			<div className="container">
-        <h1>useEffect/useCallback</h1>
-				<Effect />
-			</div>
-			<div className="container">
-        <h1>useRef</h1>
-				
-			</div>
-			<div className="container">
-        <h1>fowardRef</h1>
-				
-			</div>
-			<div className="container">
-        <h1>useReducer</h1>
-				
-			</div>
-			<div className="container">
-        <h1>useMemo</h1>
-				
-			</div>
-		</div>
-	);
+  return (
+    <>
+      <Routes />
+    </>
+  );
 }
 
 export default App;

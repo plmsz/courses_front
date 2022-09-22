@@ -48,3 +48,6 @@ https://redux-toolkit.js.org/usage/usage-guide
 
 ## extra reducers
 https://redux-toolkit.js.org/api/createslice#the-extrareducers-builder-callback-notation
+
+npm create vite@latest react-redux-toolkit
+npm i axios @reduxjs/toolkit
