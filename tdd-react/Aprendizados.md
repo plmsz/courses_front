@@ -17,16 +17,17 @@ test('thrown', () => {
   }).toThrow();
 });
 
-const asyncCallback = (cb: any) => {
-  setTimeout(() => {
-    cb(true);
-  }, 1000);
-};
 ```
 
 # Callbacks
 
 ```ts
+const asyncCallback = (cb: any) => {
+  setTimeout(() => {
+    cb(true);
+  }, 1000);
+};
+
 it('callback', (done) => {
   asyncCallback((result: boolean) => {
     expect(result).toBe(true);
