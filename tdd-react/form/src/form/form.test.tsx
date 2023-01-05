@@ -1,8 +1,22 @@
 import React from 'react';
 import Form from './form';
 
-import { fireEvent, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { rest } from 'msw';
+import { setupServer } from 'msw/node';
+import { CREATED_STATUS, ERROR_SERVER_STATUS } from '../constants/httpStatus';
+
+const server = setupServer(
+  rest.post('/products', async (req, res, ctx) => {
+    const { name, size, type } = await req.json();
+    if (name && size && type) {
+      return res(ctx.status(CREATED_STATUS));
+    }
+    return res(ctx.status(ERROR_SERVER_STATUS));
+  })
+);
+beforeAll(() => server.listen());
+afterAll(() => server.close());
 
 describe('when the form is mounted', () => {
   it('should render the form', () => {
@@ -26,12 +40,89 @@ describe('when the form is mounted', () => {
   });
 });
 describe('when the user submits the form without values', () => {
-  it('should display validation messages', () => {
+  it('should display validation messages', async () => {
     render(<Form />);
     expect(screen.queryByText(/the name is required/i)).not.toBeInTheDocument();
+
     fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+
     expect(screen.getByText(/the name is required/i)).toBeInTheDocument();
     expect(screen.getByText(/the size is required/i)).toBeInTheDocument();
-    // expect(screen.getByText(/the type is required/i)).toBeInTheDocument();
+    expect(screen.getByText(/the type is required/i)).toBeInTheDocument();
+  });
+});
+describe('when the user blurs an empty field', () => {
+  it('should display validation error messages for input name', () => {
+    render(<Form />);
+    expect(screen.queryByText(/the name is required/i)).not.toBeInTheDocument();
+    fireEvent.blur(screen.getByLabelText(/name/i), {
+      name: /name/i,
+      value: '',
+    });
+    expect(screen.getByText(/the name is required/i)).toBeInTheDocument();
+  });
+  it('should display validation error messages for input size', () => {
+    render(<Form />);
+    expect(screen.queryByText(/the size is required/i)).not.toBeInTheDocument();
+    fireEvent.blur(screen.getByLabelText(/size/i), {
+      name: /size/i,
+      value: '',
+    });
+    expect(screen.getByText(/the size is required/i)).toBeInTheDocument();
+  });
+  it('should display validation error messages for input type', () => {
+    render(<Form />);
+    expect(screen.queryByText(/the type is required/i)).not.toBeInTheDocument();
+    fireEvent.blur(screen.getByLabelText(/type/i), {
+      name: /type/i,
+      value: '',
+    });
+    expect(screen.getByText(/the type is required/i)).toBeInTheDocument();
+  });
+
+
+});
+describe('when the user clicks on the submit button', () => {
+  it('should the submit button be disabled until the request is done', async () => {
+    render(<Form />);
+    const button = screen.getByRole('button', { name: /submit/i });
+
+    expect(button).not.toBeDisabled();
+
+    fireEvent.click(button);
+
+    expect(button).toBeDisabled();
+
+    await waitFor(() => {
+      expect(button).not.toBeDisabled();
+    });
+  });
+  it('should display the success message and clear the form', async () => {
+    render(<Form />);
+    const inputName = screen.getByLabelText(/name/i);
+    const inputSize = screen.getByLabelText(/size/i);
+    const selectType = screen.getByLabelText(/type/i);
+
+    fireEvent.change(inputName, {
+      target: { value: 'foo' },
+    });
+    fireEvent.change(inputSize, {
+      target: { value: '10' },
+    });
+    fireEvent.change(selectType, {
+      target: { value: 'electronic' },
+    });
+
+    const button = screen.getByRole('button', { name: /submit/i });
+    expect(button).not.toBeDisabled();
+    fireEvent.click(button);
+
+    await waitFor(() => {
+      expect(screen.getByText(/product stored/i)).toBeInTheDocument();
+    });
+
+    expect(inputName).toHaveValue('');
+    expect(inputSize).toHaveValue('');
+    expect(selectType).toHaveValue('');
   });
 });
