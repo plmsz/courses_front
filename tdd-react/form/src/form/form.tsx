@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { saveProduct } from '../services/productServices';
-import { CREATED_STATUS } from '../constants/httpStatus';
+import { CREATED_STATUS, ERROR_SERVER_STATUS, INVALID_REQUEST_STATUS } from '../constants/httpStatus';
 
 const Form = () => {
   const [isSaving, setIsSaving] = useState(false);
@@ -18,7 +18,7 @@ const Form = () => {
     size: '',
     type: '',
   });
-
+  const [errorMessage, setErrorMessage] = useState('');
   const validateField = (name: string, value: string) => {
     setFormErrors((prev) => ({
       ...prev,
@@ -33,6 +33,16 @@ const Form = () => {
     validateField('name', name.value);
     validateField('size', size.value);
     validateField('type', type.value);
+  };
+
+  const handleFetchError = async (error: Response) => {
+    if (error.status === ERROR_SERVER_STATUS) {
+      setErrorMessage('Unexpected error, please try again');
+    }
+    if (error.status === INVALID_REQUEST_STATUS) {
+      const data = await error.json();
+      setErrorMessage(data.message);
+    }
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -57,11 +67,20 @@ const Form = () => {
       type: type.value,
     };
 
-    const response = await saveProduct(body);
+    try {
+      const response = await saveProduct(body);
 
-    if (response.status === CREATED_STATUS) {
-      setIsSuccess(true);
-      form.reset();
+      if (!response.ok) {
+        throw response;
+      }
+      if (response.status === CREATED_STATUS) {
+        setIsSuccess(true);
+        form.reset();
+      }
+    } catch (error) {
+      if (error instanceof Response) {
+        handleFetchError(error);
+      }
     }
 
     setIsSaving(false);
@@ -77,6 +96,7 @@ const Form = () => {
     <div>
       <h1>Create product</h1>
       {isSuccess && <p>Product stored</p>}
+      <p>{errorMessage}</p>
       <form onSubmit={handleSubmit}>
         <TextField
           label='name'

@@ -4,7 +4,7 @@ import Form from './form';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-import { CREATED_STATUS, ERROR_SERVER_STATUS } from '../constants/httpStatus';
+import { CREATED_STATUS, ERROR_SERVER_STATUS, INVALID_REQUEST_STATUS } from '../constants/httpStatus';
 
 const server = setupServer(
   rest.post('/products', async (req, res, ctx) => {
@@ -17,6 +17,7 @@ const server = setupServer(
 );
 beforeAll(() => server.listen());
 afterAll(() => server.close());
+afterEach(() => server.resetHandlers());
 
 describe('when the form is mounted', () => {
   it('should render the form', () => {
@@ -79,8 +80,6 @@ describe('when the user blurs an empty field', () => {
     });
     expect(screen.getByText(/the type is required/i)).toBeInTheDocument();
   });
-
-
 });
 describe('when the user clicks on the submit button', () => {
   it('should the submit button be disabled until the request is done', async () => {
@@ -124,5 +123,47 @@ describe('when the user clicks on the submit button', () => {
     expect(inputName).toHaveValue('');
     expect(inputSize).toHaveValue('');
     expect(selectType).toHaveValue('');
+  });
+});
+
+describe('when the user submits the form and server throws an error', () => {
+  it(`should display the error message 'Unexpected error, please try again'`, async () => {
+    render(<Form />);
+
+    const button = screen.getByRole('button', { name: /submit/i });
+    expect(button).not.toBeDisabled();
+    fireEvent.click(button);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(/unexpected error, please try again/i)
+      ).toBeInTheDocument();
+    });
+  });
+});
+describe('when the user submits the form returns a invalid requrest error', () => {
+  it(`should display the error message 'the form is invalid, the fields [field, ...fieldN]are required`, async () => {
+    render(<Form />);
+    server.use(
+      rest.post('/products', (req, res, ctx) => {
+        return res(
+          ctx.status(INVALID_REQUEST_STATUS),
+          ctx.json({
+            message:
+              'The form is invalid, the fields name, size, type are required',
+          })
+        );
+      })
+    );
+    const button = screen.getByRole('button', { name: /submit/i });
+    fireEvent.click(button);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          /the form is invalid, the fields name, size, type are required/i
+        )
+      ).toBeInTheDocument();
+    });
   });
 });
