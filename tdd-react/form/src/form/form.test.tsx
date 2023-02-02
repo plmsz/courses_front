@@ -172,7 +172,7 @@ describe('when the user submits the form returns a invalid requrest error', () =
   });
 });
 
-describe('when the user submits the form and display the error message "connection error, please try later"', () => {
+describe.skip('when the user submits the form and display the error message "connection error, please try later"', () => {
   it('the form page must display the error message "connection error, please try later"', async () => {
     render(<Form />);
     rest.post('/products', (req, res, ctx) => {

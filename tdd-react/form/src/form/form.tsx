@@ -5,10 +5,18 @@ import {
   InputLabel,
   FormControl,
   NativeSelect,
+  Container,
+  CssBaseline,
+  Grid,
+  Typography,
 } from '@material-ui/core';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { saveProduct } from '../services/productServices';
-import { CREATED_STATUS, ERROR_SERVER_STATUS, INVALID_REQUEST_STATUS } from '../constants/httpStatus';
+import {
+  CREATED_STATUS,
+  ERROR_SERVER_STATUS,
+  INVALID_REQUEST_STATUS,
+} from '../constants/httpStatus';
 
 const Form = () => {
   const [isSaving, setIsSaving] = useState(false);
@@ -45,7 +53,7 @@ const Form = () => {
       setErrorMessage(data.message);
       return;
     }
-    setErrorMessage('Connection error, please try later')
+    setErrorMessage('Connection error, please try later');
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -96,60 +104,72 @@ const Form = () => {
   };
 
   return (
-    <div>
-      <h1>Create product</h1>
+    <Container maxWidth='xs'>
+      <CssBaseline />
+      <Typography component='h1' variant='h5' align='center'>
+        Create product
+      </Typography>
       {isSuccess && <p>Product stored</p>}
       <p>{errorMessage}</p>
       <form onSubmit={handleSubmit}>
-        <TextField
-          label='name'
-          id='name'
-          name='name'
-          helperText={formErrors.name}
-          error={formErrors.name !== ''}
-          onBlur={handleBlur}
-        />
-
-        <TextField
-          label='size'
-          id='size'
-          name='size'
-          helperText={formErrors.size}
-          error={formErrors.size !== ''}
-          onBlur={handleBlur}
-        />
-        <FormControl>
-          <InputLabel variant='outlined' htmlFor='type-select'>
-            Type
-          </InputLabel>
-          <NativeSelect
-            defaultValue=''
-            inputProps={{
-              name: 'type',
-              id: 'type-select',
-            }}
-            error={formErrors.type !== ''}
-            onBlur={handleBlur}
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label='Name'
+              id='name'
+              name='name'
+              helperText={formErrors.name}
+              error={formErrors.name !== ''}
+              onBlur={handleBlur}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label='Size'
+              id='size'
+              name='size'
+              helperText={formErrors.size}
+              error={formErrors.size !== ''}
+              onBlur={handleBlur}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FormControl fullWidth>
+              <InputLabel variant='outlined' htmlFor='type-select'>
+                Type
+              </InputLabel>
+              <NativeSelect
+                defaultValue=''
+                inputProps={{
+                  name: 'type',
+                  id: 'type-select',
+                }}
+                error={formErrors.type !== ''}
+                onBlur={handleBlur}
+              >
+                <option value=''></option>
+                <option value='electronic'>electronic</option>
+                <option value='furniture'>furniture</option>
+                <option value='clothing'>clothing</option>
+              </NativeSelect>
+              <FormHelperText error={formErrors.type !== ''}>
+                {formErrors.type !== '' && formErrors.type}
+              </FormHelperText>
+            </FormControl>
+          </Grid>
+          <Button
+            disabled={isSaving}
+            type='submit'
+            color='primary'
+            variant='contained'
           >
-            <option value=''></option>
-            <option value='electronic'>electronic</option>
-            <option value='furniture'>furniture</option>
-            <option value='clothing'>clothing</option>
-          </NativeSelect>
-          <FormHelperText error={formErrors.type !== ''}>
-            {formErrors.type !== '' && formErrors.type}
-          </FormHelperText>
-        </FormControl>
-        <Button
-          disabled={isSaving}
-          type='submit'
-          color='primary'
-          variant='contained'
-        >
-          Submit
-        </Button>
+            Submit
+          </Button>
+        </Grid>
       </form>
-    </div>
+    </Container>
   );
 };
 
