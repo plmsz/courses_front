@@ -38,11 +38,14 @@ const Form = () => {
   const handleFetchError = async (error: Response) => {
     if (error.status === ERROR_SERVER_STATUS) {
       setErrorMessage('Unexpected error, please try again');
+      return;
     }
     if (error.status === INVALID_REQUEST_STATUS) {
       const data = await error.json();
       setErrorMessage(data.message);
+      return;
     }
+    setErrorMessage('Connection error, please try later')
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

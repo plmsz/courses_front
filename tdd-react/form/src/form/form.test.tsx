@@ -4,7 +4,11 @@ import Form from './form';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-import { CREATED_STATUS, ERROR_SERVER_STATUS, INVALID_REQUEST_STATUS } from '../constants/httpStatus';
+import {
+  CREATED_STATUS,
+  ERROR_SERVER_STATUS,
+  INVALID_REQUEST_STATUS,
+} from '../constants/httpStatus';
 
 const server = setupServer(
   rest.post('/products', async (req, res, ctx) => {
@@ -165,5 +169,16 @@ describe('when the user submits the form returns a invalid requrest error', () =
         )
       ).toBeInTheDocument();
     });
+  });
+});
+
+describe('when the user submits the form and display the error message "connection error, please try later"', () => {
+  it('the form page must display the error message "connection error, please try later"', async () => {
+    render(<Form />);
+    rest.post('/products', (req, res, ctx) => {
+      return res.networkError('Failed to connect');
+    });
+    fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+    await screen.findByText(/connection error, please try later/i);
   });
 });
