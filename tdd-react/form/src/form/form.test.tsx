@@ -1,3 +1,4 @@
+/* eslint-disable testing-library/no-debugging-utils */
 import React from 'react';
 import Form from './form';
 
@@ -172,7 +173,7 @@ describe('when the user submits the form returns a invalid requrest error', () =
   });
 });
 
-describe.skip('when the user submits the form and display the error message "connection error, please try later"', () => {
+describe.only('when the user submits the form and display the error message "connection error, please try later"', () => {
   it('the form page must display the error message "connection error, please try later"', async () => {
     render(<Form />);
     rest.post('/products', (req, res, ctx) => {
@@ -180,5 +181,7 @@ describe.skip('when the user submits the form and display the error message "con
     });
     fireEvent.click(screen.getByRole('button', { name: /submit/i }));
     await screen.findByText(/connection error, please try later/i);
+    // expect( await screen.findByText(/unexpected error, please try again/i), {timeout: 3000}).toBeInTheDocument();
+    // screen.debug(undefined, 500000)
   });
 });
