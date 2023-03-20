@@ -1,0 +1,135 @@
+/*
+ * global site styles
+ */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+hp-content {
+  display: flex;
+
+  width: 100vw;
+  height: 100vh;
+
+  justify-content: center;
+  align-items: center;
+}
+/* Enquanto vh e vw estão sempre relacionados com a altura e largura da viewport, respectivamente, as unidades de CSS moderno vmin e vmax estão relacionados com o valor máximo e mínimo destas larguras e alturas, dependendo de qual é a menor e a maior. */
+hp-presentation {
+  display: block;
+  background-color: #fff;
+
+  width: 80vmin;
+  height: 80vmin;
+
+  border: 0.2em solid #000;
+  border-radius: 1em;
+}
+
+hp-presentation > hp-slide {
+  display: none;
+}
+hp-presentation > hp-slide.active {
+  display: block;
+}
+
+hp-slide {
+  display: inline-block;
+
+  width: 80%;
+  height: 80%;
+
+  margin: 10%;
+
+  font-size: 8vmin;
+  font-weight: bold;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+hp-chooser {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 20vmin;
+}
+
+hp-chooser.fixed {
+  height: auto;
+}
+
+hp-chooser * {
+  max-width: 20%;
+  margin: 5% 2.5%;
+}
+
+hp-chooser.chosen > *.chosen {
+  max-width: 30%;
+  animation-name: chosen_fixed;
+  animation-duration: 0.5s;
+}
+hp-chooser.fixed > *.chosen {
+  max-width: 50%;
+}
+hp-chooser.chosen.animate > *.chosen {
+  animation-name: choosen;
+  animation-duration: 0.5s;
+  animation-timing-function: ease;
+}
+hp-chooser.chosen > *:not(.chosen) {
+  max-width: 16.6%;
+  opacity: 0.25;
+}
+hp-chooser.fixed > *:not(.chosen) {
+  max-width: 0%;
+  animation-name: unchosen_fixed;
+  animation-duration: 0.5s;
+  opacity: 0.25;
+}
+hp-chooser.chosen.animate > *:not(.chosen) {
+  animation-name: unchoosen;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+}
+
+@keyframes choosen {
+  from {
+    max-width: 20%;
+    opacity: 1;
+  }
+  to {
+    max-width: 30%;
+    opacity: 0.25;
+  }
+}
+
+@keyframes uchoosen {
+  from {
+    max-width: 20%;
+  }
+  to {
+    max-width: 16.6%;
+  }
+}
+
+@keyframes chosen_fixed {
+  from {
+    max-width: 30%;
+  }
+  to {
+    max-width: 50%;
+  }
+}
+@keyframes unchosen_fixed {
+  from {
+    max-width: 16.6%;
+  }
+  to {
+    max-width: 0%;
+  }
+}
