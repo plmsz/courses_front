@@ -16,7 +16,6 @@ test('thrown', () => {
     throw Error();
   }).toThrow();
 });
-
 ```
 
 # Callbacks
@@ -62,11 +61,20 @@ test('third example', () => {
 
   storage.get.mockReturnValueOnce(username);
   const result = getUsername();
-  
+
   expect(result).toBe(username);
   expect(storage.get).toHaveBeenCalled();
   expect(storage.get).toHaveBeenCalledWith({
     key: 'username',
   });
 });
+```
+
+# closest (não recomendado)
+https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/no-node-access.md
+```js
+expect(within(table).getByText(/test/i).closest('a')).toHaveAttribute(
+  'href',
+  'http://localhost:3000/test',
+);
 ```

@@ -1,13 +1,6 @@
-import {
-  Alert,
-  Box,
-  Button,
-  Container,
-  Grid,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Button, Container, Grid, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import Content from './content/content';
 
 const GithubSearchPages: React.FC = () => {
   const [isSearching, setIsSearching] = useState(false);
@@ -19,42 +12,7 @@ const GithubSearchPages: React.FC = () => {
     setIsSearching(false);
     setIsSearchApplied(true);
   };
-  const renderContent = (
-    <>
-      {isSearchApplied ? (
-        <table>
-          <thead>
-            <tr>
-              <th>Repository</th>
-              <th>Stars</th>
-              <th>Forks</th>
-              <th>Open issues</th>
-              <th>Updated at</th>
-            </tr>
-          </thead>
-          <tbody>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
-          </tbody>
-        </table>
-      ) : (
-        <Box
-          display="flex"
-          alignItems={'center'}
-          justifyContent={'center'}
-          height="200px"
-        >
-          <Alert severity="info">
-            Please provide a search option and click in the search button
-          </Alert>
-        </Box>
-      )}
-    </>
-  );
-  
+
   return (
     <Container>
       <Typography variant="h3" component="h1">
@@ -80,7 +38,7 @@ const GithubSearchPages: React.FC = () => {
           </Button>
         </Grid>
       </Grid>
-      {renderContent}
+      <Content isSearchApplied={isSearchApplied} />
     </Container>
   );
 };
